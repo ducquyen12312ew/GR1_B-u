@@ -1,0 +1,41 @@
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:104:18:virtual void touchgfx::Screen::afterTransition()	1
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/Screen.hpp:154:18:virtual void touchgfx::Screen::handleKeyEvent(uint8_t)	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:58:6:virtual void GameScreenView::tearDownScreen()	1
+../../TouchGFX/gui/include/gui/gamescreen_screen/GameScreenView.hpp:11:9:GameScreenView::~GameScreenView()	1
+../../TouchGFX/gui/include/gui/gamescreen_screen/GameScreenView.hpp:11:9:virtual GameScreenView::~GameScreenView()	1
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/hal/Types.hpp:180:10:bool touchgfx::Rect::intersect(int16_t, int16_t) const	4
+../../Middlewares/ST/touchgfx/framework/include/touchgfx/Drawable.hpp:233:10:void touchgfx::Drawable::setPosition(int16_t, int16_t, int16_t, int16_t)	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:5:1:GameScreenView::GameScreenView()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:63:6:void GameScreenView::initGPIO()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:77:6:void GameScreenView::toggleLED()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:217:5:int GameScreenView::generateRandomNumber(int, int)	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:224:5:int GameScreenView::calculateDamage(int, bool)	2
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:233:6:bool GameScreenView::canUseSpecial(bool)	4
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:544:6:void GameScreenView::startResetTimer()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:82:6:void GameScreenView::hideActionButtons()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:99:6:void GameScreenView::showActionButtons()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:116:6:void GameScreenView::toggleActionMenu()	2
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:510:6:void GameScreenView::resetNarutoState()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:527:6:void GameScreenView::resetBleachState()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:795:6:void GameScreenView::endGame(bool)	3
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:784:6:void GameScreenView::checkGameEnd()	4
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:674:6:void GameScreenView::hideAllPlayerHPWidgets()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:552:6:void GameScreenView::updatePlayerHPDisplay()	14
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:703:6:void GameScreenView::hideAllAIHPWidgets()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:613:6:void GameScreenView::updateAIHPDisplay()	14
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:734:6:void GameScreenView::updatePlayerChakraDisplay()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:760:6:void GameScreenView::gainChakra(int)	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:771:6:void GameScreenView::useChakra(int)	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:246:6:void GameScreenView::playerAttack()	2
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:278:6:void GameScreenView::playerDefend()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:309:6:void GameScreenView::playerSpecial()	2
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:745:6:void GameScreenView::updateAIChakraDisplay()	3
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:12:6:virtual void GameScreenView::setupScreen()	2
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:822:6:void GameScreenView::resetToMainMenu()	2
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:177:6:virtual void GameScreenView::handleTickEvent()	6
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:422:6:void GameScreenView::aiAttack()	2
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:450:6:void GameScreenView::aiDefend()	1
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:477:6:void GameScreenView::aiSpecial()	2
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:346:6:void GameScreenView::performAIAction()	30
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:126:6:virtual void GameScreenView::handleClickEvent(const touchgfx::ClickEvent&)	14
+..\..\TouchGFX\gui\src\gamescreen_screen\GameScreenView.cpp:172:6:virtual void GameScreenView::handleDragEvent(const touchgfx::DragEvent&)	1

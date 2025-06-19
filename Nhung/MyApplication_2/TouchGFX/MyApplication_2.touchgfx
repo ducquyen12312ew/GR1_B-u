@@ -1,0 +1,542 @@
+{
+  "Application": {
+    "Screens": [
+      {
+        "Name": "MainMenuScreen",
+        "Components": [
+          {
+            "Type": "ScalableImage",
+            "Name": "background",
+            "Width": 240,
+            "Height": 320,
+            "Filename": "background1.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "title",
+            "X": 41,
+            "Y": 14,
+            "Width": 158,
+            "Height": 112,
+            "Filename": "title1.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ButtonWithLabel",
+            "Name": "PLAY",
+            "X": 33,
+            "Y": 206,
+            "Width": 175,
+            "Height": 50,
+            "Pressed": "__generated\\alternate_theme_images_widgets_button_regular_height_50_small_round_action.png",
+            "Released": "__generated\\alternate_theme_images_widgets_button_regular_height_50_small_round_action.png",
+            "TextId": "__SingleUse_SH4I",
+            "ReleasedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "PressedColor": {
+              "Red": 255,
+              "Green": 255,
+              "Blue": 255
+            },
+            "TextRotation": "0"
+          }
+        ],
+        "Interactions": [
+          {
+            "InteractionName": "Interaction1",
+            "Trigger": {
+              "Type": "TriggerClicked",
+              "TriggerComponent": "PLAY"
+            },
+            "Action": {
+              "Type": "ActionGotoScreen",
+              "ScreenTransitionType": "ScreenTransitionNone",
+              "ActionComponent": "GameScreen"
+            }
+          }
+        ]
+      },
+      {
+        "Name": "GameScreen",
+        "Components": [
+          {
+            "Type": "ScalableImage",
+            "Name": "san_Dau",
+            "Width": 240,
+            "Height": 320,
+            "Filename": "san_dau.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_100_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Filename": "bar1.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_10_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar11.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_0_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar12.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_20_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar10.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_30_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar9.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_40_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar8.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_50_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar7.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_60_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar6.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_70_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar5.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_80_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar4.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_90_ID",
+            "X": 5,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "bar3.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_100_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Filename": "bar2.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_90_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth9.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_80_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth8.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_70_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth7.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_60_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth6.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_50_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth5.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_40_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth4.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_30_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth3.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_20_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth2.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_10_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth1.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "BITMAP_HP_0_ID_1",
+            "X": 126,
+            "Y": 6,
+            "Width": 105,
+            "Height": 29,
+            "Visible": false,
+            "Filename": "barbleach\\barhealth0.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "bleach",
+            "X": 167,
+            "Y": 107,
+            "Width": 64,
+            "Height": 85,
+            "Filename": "bleach.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "bleach_spe",
+            "X": 99,
+            "Y": 62,
+            "Width": 117,
+            "Height": 130,
+            "Visible": false,
+            "Filename": "bleach_spe.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "bleach_def",
+            "X": 164,
+            "Y": 95,
+            "Width": 76,
+            "Height": 97,
+            "Visible": false,
+            "Filename": "bleach_def.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "bleach_atk",
+            "X": 110,
+            "Y": 66,
+            "Width": 103,
+            "Height": 126,
+            "Visible": false,
+            "Filename": "bleach_atk.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "naruto",
+            "X": 7,
+            "Y": 107,
+            "Width": 67,
+            "Height": 85,
+            "Filename": "naguto.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "naruto_spe",
+            "X": 63,
+            "Y": 103,
+            "Width": 69,
+            "Height": 93,
+            "Visible": false,
+            "Filename": "naruto_spe.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "naruto_def",
+            "X": 5,
+            "Y": 100,
+            "Width": 69,
+            "Height": 92,
+            "Visible": false,
+            "Filename": "naruto_def.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "naruto_atk",
+            "X": 57,
+            "Y": 100,
+            "Width": 69,
+            "Height": 92,
+            "Visible": false,
+            "Filename": "naruto_atk.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "btn_attack",
+            "X": 64,
+            "Y": 242,
+            "Width": 46,
+            "Height": 46,
+            "Visible": false,
+            "Filename": "atk.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "btn_def",
+            "X": 124,
+            "Y": 242,
+            "Width": 46,
+            "Height": 46,
+            "Visible": false,
+            "Filename": "def.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "btn_spe",
+            "X": 184,
+            "Y": 242,
+            "Width": 46,
+            "Height": 46,
+            "Visible": false,
+            "Filename": "spe.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "btn_arrow2",
+            "X": 2,
+            "Y": 241,
+            "Width": 46,
+            "Height": 46,
+            "Visible": false,
+            "Filename": "nut1.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "ScalableImage",
+            "Name": "btn_arrow1",
+            "X": 2,
+            "Y": 241,
+            "Width": 46,
+            "Height": 46,
+            "Filename": "nut.png",
+            "ScalingAlgorithm": "Nearest-neighbor"
+          },
+          {
+            "Type": "Box",
+            "Name": "chakra_box1",
+            "X": 14,
+            "Y": 43,
+            "Width": 86,
+            "Height": 5,
+            "Color": {
+              "Green": 102,
+              "Blue": 255
+            }
+          },
+          {
+            "Type": "Box",
+            "Name": "chakra_box2",
+            "X": 135,
+            "Y": 43,
+            "Width": 86,
+            "Height": 5,
+            "Color": {
+              "Green": 102,
+              "Blue": 255
+            }
+          }
+        ],
+        "Interactions": []
+      }
+    ],
+    "CustomContainerDefinitions": [],
+    "Name": "MyApplication_2",
+    "Resolution": {
+      "Width": 240,
+      "Height": 320
+    },
+    "SelectedColorDepth": 16,
+    "StartupScreenName": "MainMenuScreen",
+    "SelectedStartupLanguage": "GB",
+    "TouchGfxPath": "../Middlewares/ST/touchgfx",
+    "UIPath": ".",
+    "AvailableColorDepths": [
+      16
+    ],
+    "AvailableLCDs": {
+      "16": "LCD16bpp"
+    },
+    "AvailableSections": [
+      "ExtFlashSection",
+      "IntFlashSection"
+    ],
+    "AvailableResolutions": [
+      {
+        "Width": 240,
+        "Height": 320
+      }
+    ],
+    "PhysicalButtons": [],
+    "FrameworkFeatures": {
+      "LCD16bpp": {
+        "Id": "LCD16bpp",
+        "IsEnabled": true
+      }
+    },
+    "GenerateAssetsCommand": "make -f simulator/gcc/Makefile assets -j8",
+    "PostGenerateCommand": "touchgfx update_project --project-file=simulator/msvs/Application.vcxproj",
+    "PostGenerateTargetCommand": "touchgfx update_project",
+    "CompileSimulatorCommand": "make -f simulator/gcc/Makefile -j8",
+    "RunSimulatorCommand": "build\\bin\\simulator.exe",
+    "CompileTargetCommandOverride": "make -f ../gcc/Makefile -j8",
+    "FlashTargetCommandOverride": "make -f ../gcc/Makefile flash",
+    "LandscapeSkinX": 0,
+    "LandscapeSkinY": 0,
+    "PortraitSkinX": 0,
+    "PortraitSkinY": 0,
+    "DisplayOrientation": "Portrait",
+    "Family": "STM32F4",
+    "SubFamily": "STM32F429/439",
+    "Toolchain": "STM32CubeIDE",
+    "Platform": "m4",
+    "ProjectFile": "../STM32F429I_DISCO_REV_D01.ioc",
+    "OptionalComponentsRoot": "../Middlewares/ST/touchgfx_components",
+    "OptionalComponents": [],
+    "AdditionalFeatures": [
+      "CWRVector",
+      "VectorFonts"
+    ]
+  },
+  "Version": "4.25.0",
+  "CreatedBy": "4.25.0"
+}
