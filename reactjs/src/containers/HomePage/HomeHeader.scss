@@ -2,74 +2,128 @@
   height: 60px;
   width: 100%;
   padding: 0 40px;
+
   .home-header-content {
     width: 100%;
     height: 100%;
     display: flex;
+
     .left-content {
       width: 20%;
       display: flex;
       align-items: center;
+
       .header-logo {
         height: 150%;
         width: 100%;
         cursor: pointer;
         transform: scale(0.5, 0.5);
         margin-left: -60px;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: scale(0.55, 0.55);
+        }
       }
+
       i {
         font-size: 25px;
         color: gray;
         cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #f7d800;
+        }
       }
     }
+
     .center-content {
       width: 55%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+
       .child-content {
+        cursor: pointer;
+        padding: 10px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #f5f5f5;
+          transform: translateY(-2px);
+        }
+
         .subs-title {
           font-weight: 400;
           font-size: 12px;
+          color: #666;
         }
       }
     }
+
     .right-content {
       width: 25%;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+
       .support {
         padding-right: 50px;
         display: flex;
         align-items: center;
         cursor: pointer;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #f7d800;
+        }
+
         i {
           font-size: 15px;
           margin-right: 5px;
         }
       }
+
       .language-vi {
         cursor: pointer;
+        padding: 5px 8px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #f5f5f5;
+        }
+
         &.active {
           color: orange;
+          background: #fff3e0;
         }
       }
+
       .language-en {
         margin: 0 10px;
         cursor: pointer;
+        padding: 5px 8px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #f5f5f5;
+        }
+
         &.active {
           color: blue;
+          background: #e3f2fd;
         }
       }
     }
   }
 }
+
 .home-header-banner {
   background: url("../../assets/happy.jpg");
-
-  url: ("../../assets/happy.jpg");
   height: 485px;
   background-repeat: no-repeat;
   background-size: cover;
@@ -81,6 +135,7 @@
   .content-up {
     padding-top: 15px;
     height: 50%;
+
     .title1 {
       text-align: center;
       font-size: 30px;
@@ -89,13 +144,16 @@
       color: white;
       margin-top: 30px;
     }
+
     .title2 {
       text-align: center;
       font-size: 30px;
       text-shadow: 1px 1px 1px #333;
       color: white;
-      margin-bottom: 15px;
+      margin-bottom: 25px;
     }
+
+    // Phần search cũ (để backup nếu cần)
     .search {
       width: fit-content;
       display: flex;
@@ -105,68 +163,316 @@
       padding: 10px;
       border-radius: 25px;
       background: #f7d800;
+
       i {
-        marigin: 0 5px;
+        margin: 0 5px;
       }
+
       input {
         height: 30px;
         width: 360px;
         background: transparent;
         border: none;
         outline: none;
+        padding-left: 10px;
       }
     }
+
+    // Container mới cho SearchBar component
+    .search-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 500px;
+      padding: 0 20px;
+    }
   }
+
   .content-down {
-    position: absolute; // Đặt phần icon sát đáy
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: auto; // Loại bỏ chiều cao cố định
-    background-image: linear-gradient(
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0.9),
-      rgba(255, 255, 255, 1)
-    );
     display: flex;
-    align-items: flex-end;
     justify-content: center;
-    padding-bottom: 20px; // Khoảng cách nhẹ với đáy
+    padding-bottom: 50px;
+    padding-top: 20px; // Thêm padding-top để tạo khoảng cách
 
     .options {
       text-align: center;
       display: flex;
       gap: 50px;
-      justify-content: center;
+      margin-top: 30px; // Thêm margin-top để đẩy các icon xuống
 
       .option-child {
         width: 100px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+        }
 
         .icon-child {
-          background: white;
-          width: 40px;
-          height: 40px;
-          padding: 10px;
+          background: rgba(255, 255, 255, 0.9);
+          width: 60px;
+          height: 60px;
           border-radius: 50%;
-          text-align: center;
-          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 10px;
+          transition: all 0.3s ease;
+
+          &:hover {
+            background: #f7d800;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+          }
 
           i {
-            color: #49bce2;
             font-size: 20px;
+            color: #333;
           }
         }
 
         .text-child {
-          font-size: 17px;
+          color: white;
+          font-size: 14px;
+          text-shadow: 1px 1px 1px #333;
           font-weight: 500;
+        }
+      }
+    }
+  }
+}
 
-          &:hover {
-            color: #49bce2;
-            cursor: pointer;
+// Responsive design
+@media (max-width: 1024px) {
+  .home-header-container {
+    padding: 0 20px;
+
+    .home-header-content {
+      .center-content {
+        .child-content {
+          padding: 8px 12px;
+
+          .subs-title {
+            font-size: 11px;
           }
         }
       }
     }
   }
+
+  .home-header-banner {
+    .content-down {
+      .options {
+        gap: 30px;
+
+        .option-child {
+          width: 80px;
+
+          .icon-child {
+            width: 50px;
+            height: 50px;
+
+            i {
+              font-size: 18px;
+            }
+          }
+
+          .text-child {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .home-header-container {
+    height: auto;
+    padding: 10px 15px;
+
+    .home-header-content {
+      flex-direction: column;
+      gap: 10px;
+
+      .left-content,
+      .center-content,
+      .right-content {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .center-content {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+    }
+  }
+
+  .home-header-banner {
+    height: auto;
+    min-height: 400px;
+
+    .content-up {
+      padding: 20px;
+
+      .title1,
+      .title2 {
+        font-size: 24px;
+      }
+
+      .search-wrapper {
+        max-width: 100%;
+        padding: 0 10px;
+      }
+
+      // Search cũ responsive
+      .search {
+        width: 90%;
+        padding: 8px;
+
+        input {
+          width: 100%;
+          max-width: 300px;
+        }
+      }
+    }
+
+    .content-down {
+      padding: 20px;
+
+      .options {
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+
+        .option-child {
+          width: 70px;
+
+          .icon-child {
+            width: 45px;
+            height: 45px;
+
+            i {
+              font-size: 16px;
+            }
+          }
+
+          .text-child {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .home-header-banner {
+    .content-up {
+      .title1,
+      .title2 {
+        font-size: 20px;
+      }
+    }
+
+    .content-down {
+      .options {
+        gap: 15px;
+
+        .option-child {
+          width: 60px;
+
+          .icon-child {
+            width: 40px;
+            height: 40px;
+
+            i {
+              font-size: 14px;
+            }
+          }
+
+          .text-child {
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animation cho hover effects
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.option-child:hover {
+  animation: bounce 0.6s ease-in-out;
+}
+
+// Gradient overlay cho banner để text dễ đọc hơn
+.home-header-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  z-index: 1;
+}
+
+.home-header-banner .content-up,
+.home-header-banner .content-down {
+  position: relative;
+  z-index: 2;
+}
+
+// Loading animation cho search
+.search-loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #f7d800;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Shadow effects
+.home-header-container {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+// Smooth scroll behavior
+html {
+  scroll-behavior: smooth;
 }

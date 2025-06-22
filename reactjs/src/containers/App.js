@@ -14,14 +14,17 @@ import { path } from "../utils";
 
 import Home from "../routes/Home";
 import Login from "./Auth/Login";
+
 import System from "../routes/System";
-import Doctor from "../routes/Doctor.js";
 
 import { CustomToastCloseButton } from "../components/CustomToast";
 import HomePage from "./HomePage/HomePage.js";
 import CustomScrollbars from "../components/CustomScrollbars.js";
 import DetailDoctor from "./Patient/Doctor/DetailDoctor.js";
-import DetailSpecialty from "./Patient/Specialty/DetailSpecialty.js"; // Thêm import mới
+import Doctor from "../routes/Doctor.js";
+import DetailMedicalFacility from "./Patient/MedicalFacility/DetailMedicalFacility.js";
+import DetailSpecialty from "./Patient/Specialty/DetailSpecialty.js";
+import DetailSpecialtyDepartment from "./HomePage/DetailSpecialtyDepartment.js";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -66,10 +69,17 @@ class App extends Component {
                   <Route path={path.HOMEPAGE} component={HomePage} />
                   <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                   <Route
-                    path={path.DETAIL_SPECIALTY}
+                    path="/detail-medical-facility/:id"
+                    component={DetailMedicalFacility}
+                  />
+                  <Route
+                    path="/detail-specialty/:id"
                     component={DetailSpecialty}
-                  />{" "}
-                  {/* Thêm route mới */}
+                  />
+                  <Route
+                    path="/detail-specialty-department/:slug"
+                    component={DetailSpecialtyDepartment}
+                  />
                 </Switch>
               </CustomScrollbars>
             </div>
@@ -84,6 +94,7 @@ class App extends Component {
               pauseOnFocusLoss
               draggable
               pauseOnHover
+              closeButton={<CustomToastCloseButton />}
             />
           </div>
         </Router>
