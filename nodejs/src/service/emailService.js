@@ -153,6 +153,7 @@ module.exports = {
   sendAppointmentConfirmation,
   transporter,
 };
+// Tạo hàm lấy danh sách bệnh nhân
 
 // Thêm export default cho ES6
 module.exports.sendAppointmentConfirmation = sendAppointmentConfirmation;

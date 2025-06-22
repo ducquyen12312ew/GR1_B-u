@@ -1,0 +1,354 @@
+/* DetailSpecialty.scss */
+
+.specialty-detail-container {
+  background: #f8f9fa;
+  min-height: 100vh;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* Breadcrumb */
+  .breadcrumb {
+    background: white;
+    padding: 15px 0;
+    border-bottom: 1px solid #e9ecef;
+
+    span {
+      color: #6c757d;
+      font-size: 14px;
+    }
+  }
+
+  /* Specialty Header */
+  .specialty-header {
+    background: white;
+    padding: 30px 0;
+    border-bottom: 1px solid #e9ecef;
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .specialty-subtitle {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .specialty-description {
+      .description-content {
+        color: #555;
+        line-height: 1.8;
+        margin-bottom: 15px;
+
+        ul {
+          margin: 10px 0;
+          padding-left: 0;
+
+          li {
+            margin-bottom: 8px;
+            list-style: none;
+            position: relative;
+            padding-left: 20px;
+
+            &:before {
+              content: "•";
+              color: #007bff;
+              font-weight: bold;
+              position: absolute;
+              left: 0;
+            }
+          }
+        }
+
+        br {
+          margin-bottom: 8px;
+        }
+      }
+
+      .btn-show-more {
+        color: #007bff;
+        background: none;
+        border: none;
+        padding: 8px 0;
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: underline;
+        font-weight: 600;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: #0056b3;
+        }
+      }
+    }
+  }
+
+  /* Filters */
+  .filters-section {
+    background: white;
+    padding: 20px 0;
+    border-bottom: 1px solid #e9ecef;
+
+    .filters {
+      display: flex;
+      gap: 20px;
+
+      .filter-select {
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background: white;
+        font-size: 14px;
+        cursor: pointer;
+
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+        }
+      }
+    }
+  }
+
+  /* Doctors Section */
+  .doctors-section {
+    padding: 30px 0;
+
+    .doctor-card {
+      background: white;
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      display: flex;
+      gap: 30px;
+
+      .doctor-info {
+        flex: 1;
+        display: flex;
+        gap: 20px;
+
+        .doctor-avatar {
+          img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+          }
+        }
+
+        .doctor-details {
+          flex: 1;
+
+          .doctor-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 8px;
+          }
+
+          .doctor-experience {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: 500;
+          }
+
+          .doctor-workplace {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+          }
+
+          .doctor-specialty {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+          }
+
+          .doctor-location {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+          }
+
+          .btn-more-info {
+            color: #007bff;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: underline;
+
+            &:hover {
+              color: #0056b3;
+            }
+          }
+        }
+      }
+
+      .booking-section {
+        flex: 1;
+        border-left: 1px solid #e9ecef;
+        padding-left: 30px;
+
+        .schedule-header {
+          margin-bottom: 15px;
+
+          .schedule-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+          }
+        }
+
+        .time-slots {
+          margin-bottom: 20px;
+
+          .day-schedule {
+            margin-bottom: 15px;
+
+            .date-label {
+              font-size: 14px;
+              font-weight: 600;
+              color: #333;
+              margin-bottom: 8px;
+            }
+
+            .time-buttons {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 8px;
+
+              .time-slot-btn {
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                background: white;
+                font-size: 12px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &:hover {
+                  background: #007bff;
+                  color: white;
+                  border-color: #007bff;
+                }
+              }
+            }
+          }
+        }
+
+        .booking-footer {
+          margin-bottom: 20px;
+
+          .select-time-note {
+            font-size: 12px;
+            color: #666;
+          }
+        }
+
+        .clinic-info {
+          h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+          }
+
+          .clinic-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+          }
+
+          .clinic-address {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+          }
+
+          .price-info {
+            .price-label {
+              font-size: 14px;
+              color: #333;
+            }
+
+            .price {
+              font-size: 16px;
+              font-weight: 700;
+              color: #007bff;
+              margin: 0 10px;
+            }
+
+            .price-detail {
+              color: #007bff;
+              font-size: 14px;
+              cursor: pointer;
+              text-decoration: underline;
+
+              &:hover {
+                color: #0056b3;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Help Section */
+  .help-section {
+    background: #28a745;
+    padding: 20px 0;
+    text-align: center;
+    color: white;
+
+    p {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .help-link {
+      color: #ffc107;
+      text-decoration: underline;
+
+      &:hover {
+        color: #ffeb3b;
+      }
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .specialty-detail-container {
+    .doctor-card {
+      flex-direction: column;
+      gap: 20px;
+
+      .booking-section {
+        border-left: none;
+        border-top: 1px solid #e9ecef;
+        padding-left: 0;
+        padding-top: 20px;
+      }
+    }
+
+    .filters {
+      flex-direction: column;
+      gap: 10px;
+
+      .filter-select {
+        width: 100%;
+      }
+    }
+  }
+}

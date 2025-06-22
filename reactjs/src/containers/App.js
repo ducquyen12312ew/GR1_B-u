@@ -14,14 +14,15 @@ import { path } from "../utils";
 
 import Home from "../routes/Home";
 import Login from "./Auth/Login";
-
 import System from "../routes/System";
+import Doctor from "../routes/Doctor.js";
 
 import { CustomToastCloseButton } from "../components/CustomToast";
 import HomePage from "./HomePage/HomePage.js";
 import CustomScrollbars from "../components/CustomScrollbars.js";
 import DetailDoctor from "./Patient/Doctor/DetailDoctor.js";
-import Doctor from "../routes/Doctor.js";
+import DetailSpecialty from "./Patient/Specialty/DetailSpecialty.js"; // Thêm import mới
+
 class App extends Component {
   handlePersistorState = () => {
     const { persistor } = this.props;
@@ -64,6 +65,11 @@ class App extends Component {
                   />
                   <Route path={path.HOMEPAGE} component={HomePage} />
                   <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                  <Route
+                    path={path.DETAIL_SPECIALTY}
+                    component={DetailSpecialty}
+                  />{" "}
+                  {/* Thêm route mới */}
                 </Switch>
               </CustomScrollbars>
             </div>

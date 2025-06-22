@@ -1,0 +1,148 @@
+/* Specialty.scss - Phong cách BookingCare */
+
+.section-specialty {
+  .section-body {
+    .specialty-item {
+      padding: 0 10px !important;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-8px);
+
+        .bg-image {
+          transform: scale(1.05);
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .specialty-name {
+          color: #4e73df;
+          font-weight: 700;
+        }
+      }
+
+      .bg-image {
+        width: 100% !important;
+        height: 180px !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        background-color: #eee !important;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+
+        /* Hiệu ứng overlay khi hover */
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            45deg,
+            rgba(78, 115, 223, 0.3),
+            rgba(46, 89, 217, 0.3)
+          );
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        &:hover::before {
+          opacity: 1;
+        }
+      }
+
+      .specialty-name {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        transition: all 0.3s ease;
+        padding: 0 5px;
+        line-height: 1.3;
+      }
+    }
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-specialty {
+    .section-body {
+      .specialty-item {
+        .bg-image {
+          height: 140px !important;
+        }
+
+        .specialty-name {
+          font-size: 14px;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+
+/* Animation cho loading */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.specialty-item {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Stagger animation cho từng item */
+.specialty-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.specialty-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.specialty-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.specialty-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.specialty-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.specialty-item:nth-child(6) {
+  animation-delay: 0.6s;
+}
+.specialty-item:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.specialty-item:nth-child(8) {
+  animation-delay: 0.8s;
+}
+
+/* Hiệu ứng cho nút "xem thêm" */
+.section-header {
+  .btn-section {
+    transition: all 0.3s ease;
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(247, 216, 0, 0.4);
+    }
+  }
+}
