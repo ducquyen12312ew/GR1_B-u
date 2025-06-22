@@ -10,7 +10,15 @@ import "./DetailSpecialty.scss";
 
 // Import ảnh bác sĩ từ assets
 import doctor1 from "../../../assets/doctor-1.webp";
-import doctorDefault from "../../../assets/images/user.svg";
+import doctorDefault from "../../../assets/bac-sy1.jpg";
+import doctor2 from "../../../assets/bac-sy2.webp";
+import doctor3 from "../../../assets/bac-sy3.jpg";
+import doctor4 from "../../../assets/bac-sy4.webp";
+import doctor5 from "../../../assets/bac-sy5.jpg";
+import doctor6 from "../../../assets/bac-sy6.png";
+import doctor7 from "../../../assets/bac-sy7.webp";
+import doctor8 from "../../../assets/bac-sy8.png";
+import doctor9 from "../../../assets/bac-sy9.jpg";
 
 class DetailSpecialty extends Component {
   constructor(props) {
@@ -204,8 +212,7 @@ class DetailSpecialty extends Component {
           lastName: "TS. BS",
           fullName: "TS. BS. Nguyễn Văn Thành",
           position: "Tiến sĩ, Bác sĩ",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2023/11/08/094704-bs-thanh.jpg",
+          image: doctor2,
           specialty: "Cơ xương khớp",
           experience: "25 năm kinh nghiệm",
           description:
@@ -233,8 +240,7 @@ class DetailSpecialty extends Component {
           lastName: "PGS. TS",
           fullName: "PGS. TS. Lê Minh Đức",
           position: "Phó giáo sư, Tiến sĩ",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2023/06/07/135531-bs-duc.jpg",
+          image: doctor3,
           specialty: "Cơ xương khớp",
           experience: "30 năm kinh nghiệm",
           description: "Chuyên gia hàng đầu về phẫu thuật thay khớp",
@@ -259,8 +265,7 @@ class DetailSpecialty extends Component {
           lastName: "BS. CKI",
           fullName: "BS. CKI. Trần Thị Mai",
           position: "Bác sĩ Chuyên khoa I",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2023/09/12/141503-bs-mai.jpg",
+          image: doctor4,
           specialty: "Cơ xương khớp",
           experience: "20 năm kinh nghiệm",
           description: "Chuyên khoa Cơ Xương Khớp - Bệnh viện Ung Bướu",
@@ -285,8 +290,7 @@ class DetailSpecialty extends Component {
           lastName: "GS. TS",
           fullName: "GS. TS. Phạm Thanh Long",
           position: "Giáo sư, Tiến sĩ",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2024/01/15/104521-gs-long.jpg",
+          image: doctor5,
           specialty: "Cơ xương khớp",
           experience: "40 năm kinh nghiệm",
           description: "Thầy thuốc Nhân dân - Nguyên Giám đốc BV Chợ Rẫy",
@@ -313,8 +317,7 @@ class DetailSpecialty extends Component {
           lastName: "PGS. TS",
           fullName: "PGS. TS. Võ Minh Tuấn",
           position: "Phó giáo sư, Tiến sĩ",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2024/02/20/110532-bs-tuan.jpg",
+          image: doctor6,
           specialty: "Cơ xương khớp",
           experience: "28 năm kinh nghiệm",
           description: "Trưởng khoa Cơ Xương Khớp - Bệnh viện Đà Nẵng",
@@ -339,8 +342,7 @@ class DetailSpecialty extends Component {
           lastName: "TS. BS",
           fullName: "TS. BS. Nguyễn Thị Lan",
           position: "Tiến sĩ, Bác sĩ",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2023/12/08/142033-bs-lan.jpg",
+          image: doctor7,
           specialty: "Cơ xương khớp",
           experience: "22 năm kinh nghiệm",
           description: "Phó khoa Cơ Xương Khớp - Bệnh viện C Đà Nẵng",
@@ -365,8 +367,7 @@ class DetailSpecialty extends Component {
           lastName: "BS. CKI",
           fullName: "BS. CKI. Hoàng Văn Nam",
           position: "Bác sĩ Chuyên khoa I",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2024/03/15/093821-bs-nam.jpg",
+          image: doctor8,
           specialty: "Cơ xương khớp",
           experience: "18 năm kinh nghiệm",
           description: "Chuyên gia phẫu thuật cột sống - Bệnh viện Đà Nẵng",
@@ -391,8 +392,7 @@ class DetailSpecialty extends Component {
           lastName: "BS. CKI",
           fullName: "BS. CKI. Lê Thị Hương",
           position: "Bác sĩ Chuyên khoa I",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2023/10/22/151244-bs-huong.jpg",
+          image: doctor9,
           specialty: "Cơ xương khớp",
           experience: "15 năm kinh nghiệm",
           description: "Chuyên gia vật lý trị liệu và phục hồi chức năng",

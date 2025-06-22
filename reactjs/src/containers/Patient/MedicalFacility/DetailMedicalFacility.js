@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import "./DetailMedicalFacility.scss";
 import HomeHeader from "../../HomePage/HomeHeader";
 import HomeFooter from "../../HomePage/HomeFooter";
-
+import hospital from "../../../assets/benh-vien-an-viet.jpg"; // Placeholder for hospital icon
 class DetailMedicalFacility extends Component {
   constructor(props) {
     super(props);
@@ -25,11 +25,10 @@ class DetailMedicalFacility extends Component {
     // Dữ liệu mẫu - trong thực tế sẽ call API
     const facilityData = {
       id: 1,
-      name: "Bệnh viện Hữu nghị Việt Đức",
+      name: "Bệnh viện Đa Khoa An Việt",
       description: "Bệnh viện có nhiều cống, bệnh nhân đến khám sẽ đến cống",
       // Sử dụng ảnh placeholder tạm thời
-      image:
-        "https://via.placeholder.com/400x250/2196F3/ffffff?text=Benh+Vien+Viet+Duc",
+      image: hospital,
       detailInfo: {
         address: "Số 16 Phủ Doãn, Hàng Bông, Hoàn Kiếm, Hà Nội",
         workingHours: {

@@ -13,7 +13,10 @@ import DatePicker from "../../components/Input/DatePicker";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import * as actions from "../../store/actions";
-
+import doctor1 from "../../assets/doctor-1.webp"; // Import ảnh bác sĩ 1
+import doctor2 from "../../assets/bac-sy2.webp"; // Import ảnh bác sĩ 2
+import doctor3 from "../../assets/bac-sy3.jpg"; // Import ảnh bác sĩ 3
+import doctor4 from "../../assets/bac-sy4.webp"; // Import ảnh bác sĩ 4
 // Import default doctor image - bạn có thể thay thế bằng đường dẫn ảnh thực tế
 const doctorImage =
   "https://via.placeholder.com/150x150/45c3d2/ffffff?text=Doctor";
@@ -76,7 +79,7 @@ class DetailSpecialtyDepartment extends Component {
   }
 
   loadNeurologyDoctors = () => {
-    // Mock data for neurology doctors
+    // Mock data for neurology doctors với ảnh thật từ assets
     const neurologyDoctors = [
       {
         id: 1,
@@ -86,7 +89,7 @@ class DetailSpecialtyDepartment extends Component {
         experience: "25 năm kinh nghiệm",
         specialty: "Đột quỵ não, Parkinson",
         education: "Đại học Y Hà Nội",
-        image: doctorImage,
+        image: doctor1, // Sử dụng ảnh doctor-1.webp
       },
       {
         id: 2,
@@ -96,7 +99,7 @@ class DetailSpecialtyDepartment extends Component {
         experience: "18 năm kinh nghiệm",
         specialty: "Động kinh, Rối loạn vận động",
         education: "Đại học Y Dược TP.HCM",
-        image: doctorImage,
+        image: doctor2, // Sử dụng ảnh bac-sy2.webp
       },
       {
         id: 3,
@@ -106,7 +109,7 @@ class DetailSpecialtyDepartment extends Component {
         experience: "12 năm kinh nghiệm",
         specialty: "Đau đầu, Rối loạn giấc ngủ",
         education: "Đại học Y Dược Huế",
-        image: doctorImage,
+        image: doctor3, // Sử dụng ảnh bac-sy3.jpg
       },
       {
         id: 4,
@@ -116,7 +119,7 @@ class DetailSpecialtyDepartment extends Component {
         experience: "15 năm kinh nghiệm",
         specialty: "Bệnh Alzheimer, Sa sút trí tuệ",
         education: "Đại học Y Hà Nội",
-        image: doctorImage,
+        image: doctor4, // Sử dụng ảnh bac-sy4.webp
       },
     ];
 
@@ -348,6 +351,7 @@ class DetailSpecialtyDepartment extends Component {
                       <img
                         src={doctor.image}
                         alt={`${doctor.firstName} ${doctor.lastName}`}
+                        onError={(e) => {}}
                       />
                     </div>
                     <div className="doctor-info">
