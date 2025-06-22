@@ -1,567 +1,613 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import "./DetailSpecialtyDepartment.scss";
 import HomeHeader from "./HomeHeader";
-import HomeFooter from "./HomeFooter";
+import "./DetailSpecialtyDepartment.scss";
+import {
+  getDetailInforDoctor,
+  getAllCodeService,
+  postPatientBookAppointment,
+} from "../../services/userService";
+import { Modal } from "reactstrap";
+import Select from "react-select";
+import DatePicker from "../../components/Input/DatePicker";
+import { toast } from "react-toastify";
+import _ from "lodash";
+import * as actions from "../../store/actions";
+
+// Import default doctor image - bạn có thể thay thế bằng đường dẫn ảnh thực tế
+const doctorImage =
+  "https://via.placeholder.com/150x150/45c3d2/ffffff?text=Doctor";
 
 class DetailSpecialtyDepartment extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      departmentData: null,
-      activeTab: "overview", // overview, doctors, procedures, contact
-      doctors: [],
+      // Specialty/Department info
+      specialtyData: {
+        name: "Khoa Thần Kinh",
+        description: "Chuyên điều trị các bệnh lý về thần kinh",
+        image: "",
+      },
+      listDoctors: [],
+
+      // Booking Modal state
+      isOpenBookingModal: false,
+      selectedDoctor: null,
+
+      // Form data
+      fullName: "",
+      phoneNumber: "",
+      email: "",
+      address: "",
+      reason: "",
+      birthday: "",
+      selectedGender: "",
+      selectedDate: new Date(),
+      selectedTimeSlot: "",
+
+      // Options
+      genders: [],
+      timeSlots: [
+        { value: "08:00-09:00", label: "08:00 - 09:00" },
+        { value: "09:00-10:00", label: "09:00 - 10:00" },
+        { value: "10:00-11:00", label: "10:00 - 11:00" },
+        { value: "14:00-15:00", label: "14:00 - 15:00" },
+        { value: "15:00-16:00", label: "15:00 - 16:00" },
+        { value: "16:00-17:00", label: "16:00 - 17:00" },
+      ],
     };
   }
 
-  componentDidMount() {
-    this.loadDepartmentData();
+  async componentDidMount() {
+    // Load mock doctors data for neurology department
+    this.loadNeurologyDoctors();
+
+    // Load genders
+    this.props.getGenders();
   }
 
-  loadDepartmentData = () => {
-    // Dữ liệu mẫu cho khoa Thần kinh của Bệnh viện Việt Đức
-    const departmentData = {
-      name: "Khoa Thần kinh",
-      fullName:
-        "Khám, điều trị, phẫu thuật về Thần kinh (Thần kinh I, Thần kinh II)",
-      facility: "Bệnh viện Hữu nghị Việt Đức",
-      image:
-        "https://via.placeholder.com/800x300/2196F3/ffffff?text=Khoa+Than+Kinh",
+  componentDidUpdate(prevProps) {
+    if (prevProps.genders !== this.props.genders) {
+      let dataGender = this.buildDataGender(this.props.genders);
+      this.setState({
+        genders: dataGender,
+      });
+    }
+  }
 
-      overview: {
-        description:
-          "Khoa Thần kinh Bệnh viện Hữu nghị Việt Đức là một trong những khoa có bề dày truyền thống và uy tín hàng đầu tại Việt Nam trong lĩnh vực chẩn đoán, điều trị và phẫu thuật các bệnh lý thần kinh.",
-        mission:
-          "Khoa cam kết cung cấp dịch vụ y tế chất lượng cao, ứng dụng những kỹ thuật tiên tiến nhất trong điều trị các bệnh lý thần kinh phức tạp.",
-        specialties: [
-          "Chấn thương sọ não",
-          "Bệnh lý sọ não",
-          "Tụy sống",
-          "Dây thần kinh ngoại vi",
-          "Ung dung nội sọ trong phẫu thuật thần kinh",
-          "Phẫu thuật thần kinh chức năng",
-          "Phẫu thuật u não sọ",
-          "Phẫu thuật mạch máu não",
-          "Điều trị đột quỵ não",
-          "Chấn thương cột sống",
-        ],
-        achievements: [
-          "Thực hiện thành công hơn 5000 ca phẫu thuật thần kinh mỗi năm",
-          "Áp dụng kỹ thuật phẫu thuật não tỉnh táo (Awake craniotomy)",
-          "Tiên phong trong ứng dụng robot phẫu thuật thần kinh tại Việt Nam",
-          "Hợp tác với các trung tâm thần kinh hàng đầu thế giới",
-          "Đào tạo hàng trăm bác sĩ chuyên khoa thần kinh",
-        ],
+  loadNeurologyDoctors = () => {
+    // Mock data for neurology doctors
+    const neurologyDoctors = [
+      {
+        id: 1,
+        firstName: "Minh Đức",
+        lastName: "TS.BS",
+        position: "Trưởng khoa Thần Kinh",
+        experience: "25 năm kinh nghiệm",
+        specialty: "Đột quỵ não, Parkinson",
+        education: "Đại học Y Hà Nội",
+        image: doctorImage,
       },
-
-      services: [
-        {
-          category: "Chẩn đoán hình ảnh",
-          items: [
-            "CT Scanner 128 lát cắt chuyên dụng thần kinh",
-            "MRI 3.0 Tesla với các chuỗi xung chuyên biệt",
-            "DSA (Chụp mạch số hóa xóa nền)",
-            "PET-CT cho chẩn đoán u não",
-            "Điện não đồ (EEG) 32 kênh",
-            "Đo tốc độ dẫn truyền thần kinh",
-          ],
-        },
-        {
-          category: "Phẫu thuật thần kinh",
-          items: [
-            "Phẫu thuật u não bằng kỹ thuật não tỉnh táo",
-            "Phẫu thuật mạch máu não (động mạch chủ não, dị dạng động tĩnh mạch)",
-            "Phẫu thuật cột sống (thoát vị đĩa đệm, hẹp ống sống)",
-            "Phẫu thuật chấn thương sọ não cấp cứu",
-            "Phẫu thuật epilepsy (động kinh)",
-            "Phẫu thuật Parkinson (DBS - Deep Brain Stimulation)",
-            "Phẫu thuật u tuyến yên",
-            "Phẫu thuật thần kinh nhi",
-          ],
-        },
-        {
-          category: "Điều trị nội khoa",
-          items: [
-            "Điều trị đột quỵ não cấp tính",
-            "Điều trị bệnh Parkinson và rối loạn vận động",
-            "Điều trị động kinh và các rối loạn ý thức",
-            "Điều trị đau đầu và đau dây thần kinh",
-            "Điều trị viêm não, viêm màng não",
-            "Điều trị bệnh lý thần kinh cơ",
-            "Điều trị đa xơ cứng",
-            "Phục hồi chức năng thần kinh",
-          ],
-        },
-      ],
-
-      procedures: [
-        {
-          title: "Quy trình khám bệnh",
-          steps: [
-            {
-              step: 1,
-              title: "Tiếp nhận và phân tuyến",
-              description:
-                "Bệnh nhân được tiếp nhận tại quầy lễ tân khoa Thần kinh, phân loại theo mức độ cấp cứu",
-            },
-            {
-              step: 2,
-              title: "Khám sàng lọc",
-              description:
-                "Bác sĩ thực hiện khám lâm sàng ban đầu, đánh giá tình trạng thần kinh cơ bản",
-            },
-            {
-              step: 3,
-              title: "Chẩn đoán chuyên sâu",
-              description:
-                "Thực hiện các xét nghiệm, chẩn đoán hình ảnh cần thiết theo chỉ định",
-            },
-            {
-              step: 4,
-              title: "Hội chẩn và điều trị",
-              description:
-                "Các chuyên gia hội chẩn, đưa ra phương án điều trị tối ưu cho từng bệnh nhân",
-            },
-            {
-              step: 5,
-              title: "Theo dõi và tái khám",
-              description:
-                "Lập lịch tái khám, theo dõi quá trình điều trị và phục hồi",
-            },
-          ],
-        },
-      ],
-
-      doctors: [
-        {
-          id: 1,
-          name: "PGS. TS. BS. Nguyễn Văn Thành",
-          position: "Trưởng khoa Thần kinh",
-          specialization: "Phẫu thuật não, điều trị đột quỵ",
-          experience: "25 năm",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2023/11/08/094704-bs-thanh.jpg",
-          achievements: [
-            "Phó giáo sư, Tiến sĩ Y học",
-            "Trưởng khoa Thần kinh Bệnh viện Việt Đức",
-            "Chuyên gia đầu ngành về phẫu thuật não",
-            "Đã thực hiện hơn 3000 ca phẫu thuật thành công",
-          ],
-        },
-        {
-          id: 2,
-          name: "TS. BS. Lê Minh Đức",
-          position: "Phó trưởng khoa",
-          specialization: "Phẫu thuật cột sống, chấn thương thần kinh",
-          experience: "20 năm",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2023/06/07/135531-bs-duc.jpg",
-          achievements: [
-            "Tiến sĩ Y học, Bác sĩ chuyên khoa II",
-            "Phó trưởng khoa Thần kinh",
-            "Chuyên gia phẫu thuật cột sống",
-            "Giảng viên Đại học Y Hà Nội",
-          ],
-        },
-        {
-          id: 3,
-          name: "BS. CKI. Trần Thị Mai",
-          position: "Bác sĩ điều trị",
-          specialization: "Điều trị đột quỵ, bệnh Parkinson",
-          experience: "15 năm",
-          image:
-            "https://cdn.bookingcare.vn/fo/w150/2023/09/12/141503-bs-mai.jpg",
-          achievements: [
-            "Bác sĩ chuyên khoa I Thần kinh",
-            "Chuyên gia điều trị đột quỵ não",
-            "Thành viên Hội Thần kinh học Việt Nam",
-            "Tham gia nhiều nghiên cứu khoa học",
-          ],
-        },
-      ],
-
-      facilities: [
-        "Phòng mổ thần kinh hiện đại với hệ thống định vị 3D",
-        "Phòng ICU thần kinh chuyên biệt",
-        "Phòng điều trị đột quỵ cấp cứu",
-        "Trung tâm phục hồi chức năng thần kinh",
-        "Phòng EEG 32 kênh",
-        "Phòng EMG - đo tốc độ dẫn truyền thần kinh",
-      ],
-
-      contact: {
-        phone: "024-3825-3531",
-        emergency: "024-3869-3731",
-        email: "thankinhvietduc@bvvietduc.vn",
-        address:
-          "Tầng 8-9, Tòa nhà C4, Bệnh viện Hữu nghị Việt Đức, Số 16 Phủ Doãn, Hàng Bông, Hoàn Kiếm, Hà Nội",
-        workingHours: {
-          weekday: "Thứ 2 - Thứ 6: 7:00 - 16:30",
-          saturday: "Thứ 7: 7:00 - 11:30",
-          emergency: "Cấp cứu 24/7",
-        },
+      {
+        id: 2,
+        firstName: "Thu Hằng",
+        lastName: "BS.CKI",
+        position: "Phó trưởng khoa",
+        experience: "18 năm kinh nghiệm",
+        specialty: "Động kinh, Rối loạn vận động",
+        education: "Đại học Y Dược TP.HCM",
+        image: doctorImage,
       },
-    };
+      {
+        id: 3,
+        firstName: "Văn Tuấn",
+        lastName: "BS.CKII",
+        position: "Bác sĩ điều trị",
+        experience: "12 năm kinh nghiệm",
+        specialty: "Đau đầu, Rối loạn giấc ngủ",
+        education: "Đại học Y Dược Huế",
+        image: doctorImage,
+      },
+      {
+        id: 4,
+        firstName: "Thị Lan",
+        lastName: "BS.CKI",
+        position: "Bác sĩ điều trị",
+        experience: "15 năm kinh nghiệm",
+        specialty: "Bệnh Alzheimer, Sa sút trí tuệ",
+        education: "Đại học Y Hà Nội",
+        image: doctorImage,
+      },
+    ];
 
     this.setState({
-      departmentData,
-      doctors: departmentData.doctors,
+      listDoctors: neurologyDoctors,
     });
   };
 
-  handleTabChange = (tabName) => {
-    this.setState({ activeTab: tabName });
+  buildDataGender = (data) => {
+    let result = [];
+    if (data && data.length > 0) {
+      data.forEach((item) => {
+        let object = {};
+        object.label = item.valueVi;
+        object.value = item.keyMap;
+        result.push(object);
+      });
+    }
+    return result;
   };
 
-  // Xử lý đặt lịch khám với bác sĩ
-  handleBookDoctorAppointment = (doctor) => {
-    if (this.props.history) {
-      this.props.history.push(`/booking-appointment`, {
-        doctorData: doctor,
-        departmentData: this.state.departmentData,
-        bookingType: "doctor",
-      });
-    } else {
-      // Fallback - có thể mở modal hoặc alert
-      alert(`Đặt lịch khám với ${doctor.name}`);
+  handleBookingClick = (doctor) => {
+    this.setState({
+      selectedDoctor: doctor,
+      isOpenBookingModal: true,
+    });
+  };
+
+  closeBookingModal = () => {
+    this.setState({
+      isOpenBookingModal: false,
+      selectedDoctor: null,
+    });
+    this.resetForm();
+  };
+
+  handleOnChangeInput = (event, id) => {
+    let valueInput = event.target.value;
+    let stateCopy = { ...this.state };
+    stateCopy[id] = valueInput;
+    this.setState({
+      ...stateCopy,
+    });
+  };
+
+  handleOnChangeDatePicker = (date) => {
+    this.setState({
+      selectedDate: date[0],
+    });
+  };
+
+  handleChangeSelect = (selectedOption, name) => {
+    let stateName = name.name;
+    let stateCopy = { ...this.state };
+    stateCopy[stateName] = selectedOption;
+    this.setState({
+      ...stateCopy,
+    });
+  };
+
+  handleConfirmBooking = async () => {
+    // Validation
+    if (!this.state.fullName.trim()) {
+      toast.error("Vui lòng nhập họ tên!");
+      return;
+    }
+    if (!this.state.phoneNumber.trim()) {
+      toast.error("Vui lòng nhập số điện thoại!");
+      return;
+    }
+    if (!this.state.email.trim()) {
+      toast.error("Vui lòng nhập email!");
+      return;
+    }
+    if (!this.state.address.trim()) {
+      toast.error("Vui lòng nhập địa chỉ!");
+      return;
+    }
+    if (!this.state.selectedGender) {
+      toast.error("Vui lòng chọn giới tính!");
+      return;
+    }
+    if (!this.state.selectedTimeSlot) {
+      toast.error("Vui lòng chọn thời gian khám!");
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.state.email)) {
+      toast.error("Email không hợp lệ!");
+      return;
+    }
+
+    // Phone validation
+    const phoneRegex = /^[0-9]{10,11}$/;
+    if (!phoneRegex.test(this.state.phoneNumber.replace(/\s/g, ""))) {
+      toast.error("Số điện thoại không hợp lệ!");
+      return;
+    }
+
+    try {
+      let formattedDate = new Date(this.state.selectedDate).getTime();
+
+      let bookingData = {
+        fullName: this.state.fullName.trim(),
+        phoneNumber: this.state.phoneNumber.trim(),
+        email: this.state.email.trim(),
+        address: this.state.address.trim(),
+        reason: this.state.reason.trim(),
+        date: formattedDate,
+        birthday: this.state.birthday
+          ? new Date(this.state.birthday).getTime()
+          : "",
+        selectedGender: this.state.selectedGender.value,
+        doctorId: this.state.selectedDoctor.id,
+        timeType: this.state.selectedTimeSlot.value,
+        language: this.props.language,
+        timeString: this.state.selectedTimeSlot.label,
+        doctorName: `${this.state.selectedDoctor.lastName} ${this.state.selectedDoctor.firstName}`,
+        department: "Khoa Thần Kinh",
+      };
+
+      console.log("Booking data:", bookingData);
+
+      // Simulate API call - replace with actual API
+      // let res = await postPatientBookAppointment(bookingData);
+
+      // For demo purposes, simulate success
+      toast.success(
+        "🎉 Đặt lịch khám thành công! Chúng tôi sẽ gửi email xác nhận cho bạn."
+      );
+
+      // Send email notification (simulate)
+      this.sendEmailNotification(bookingData);
+
+      this.closeBookingModal();
+    } catch (error) {
+      console.log("Error booking:", error);
+      toast.error("Có lỗi xảy ra khi đặt lịch! Vui lòng thử lại.");
     }
   };
 
-  // Xử lý xem chi tiết bác sĩ
-  handleViewDoctorDetail = (doctor) => {
-    if (this.props.history) {
-      this.props.history.push(`/detail-doctor/${doctor.id}`, {
-        doctorData: doctor,
-        fromDepartment: this.state.departmentData.name,
-      });
-    } else {
-      // Fallback
-      console.log("View doctor detail:", doctor);
-    }
+  sendEmailNotification = (bookingData) => {
+    // Simulate email sending
+    console.log("Sending email notification to:", bookingData.email);
+    console.log("Email content:", {
+      patientName: bookingData.fullName,
+      doctorName: bookingData.doctorName,
+      department: bookingData.department,
+      appointmentTime: bookingData.timeString,
+      appointmentDate: new Date(bookingData.date).toLocaleDateString("vi-VN"),
+    });
+  };
+
+  resetForm = () => {
+    this.setState({
+      fullName: "",
+      phoneNumber: "",
+      email: "",
+      address: "",
+      reason: "",
+      birthday: "",
+      selectedGender: "",
+      selectedTimeSlot: "",
+    });
   };
 
   render() {
-    const { departmentData, activeTab, doctors } = this.state;
-
-    if (!departmentData) {
-      return (
-        <div className="loading-container">
-          <div className="loading-spinner">Đang tải thông tin...</div>
-        </div>
-      );
-    }
+    let { specialtyData, listDoctors, isOpenBookingModal, selectedDoctor } =
+      this.state;
 
     return (
-      <div className="detail-specialty-department">
+      <Fragment>
         <HomeHeader isShowBanner={false} />
-
-        {/* Hero Section */}
-        <div className="department-hero">
-          <div className="hero-overlay">
-            <div className="hero-content">
-              <div className="breadcrumb">
-                <span>{departmentData.facility}</span> /{" "}
-                <span>{departmentData.name}</span>
-              </div>
-              <h1>{departmentData.name}</h1>
-              <h2>{departmentData.fullName}</h2>
-              <p>{departmentData.overview.description}</p>
+        <div className="specialty-detail-container">
+          {/* Specialty Header */}
+          <div className="specialty-header">
+            <div className="specialty-info">
+              <h1>{specialtyData.name}</h1>
+              <p>{specialtyData.description}</p>
             </div>
           </div>
-        </div>
 
-        {/* Navigation Tabs */}
-        <div className="department-nav">
-          <div className="nav-container">
-            <button
-              className={`nav-btn ${activeTab === "overview" ? "active" : ""}`}
-              onClick={() => this.handleTabChange("overview")}
-            >
-              <i className="fas fa-info-circle"></i> Tổng quan
-            </button>
-            <button
-              className={`nav-btn ${activeTab === "doctors" ? "active" : ""}`}
-              onClick={() => this.handleTabChange("doctors")}
-            >
-              <i className="fas fa-user-md"></i> Đội ngũ bác sĩ
-            </button>
-            <button
-              className={`nav-btn ${
-                activeTab === "procedures" ? "active" : ""
-              }`}
-              onClick={() => this.handleTabChange("procedures")}
-            >
-              <i className="fas fa-clipboard-list"></i> Quy trình khám
-            </button>
-            <button
-              className={`nav-btn ${activeTab === "contact" ? "active" : ""}`}
-              onClick={() => this.handleTabChange("contact")}
-            >
-              <i className="fas fa-phone"></i> Liên hệ
-            </button>
+          {/* Specialty Description */}
+          <div className="specialty-description">
+            <h2>Thế mạnh chuyên môn</h2>
+            <div className="description-content">
+              <h3>Khám và điều trị về thần kinh</h3>
+              <p>
+                Khoa Thần Kinh chuyên điều trị các bệnh lý về hệ thần kinh trung
+                ương và ngoại biên, bao gồm các rối loạn về não, tủy sống, dây
+                thần kinh ngoại biên và cơ.
+              </p>
+
+              <h4>Các bệnh lý chính:</h4>
+              <ul>
+                <li>Đột quỵ não (nhồi máu não, xuất huyết não)</li>
+                <li>Bệnh Parkinson và các rối loạn vận động</li>
+                <li>Động kinh các loại</li>
+                <li>Đau đầu, đau nửa đầu (migraine)</li>
+                <li>Rối loạn giấc ngủ</li>
+                <li>Bệnh Alzheimer và sa sút trí tuệ</li>
+                <li>Viêm màng não, viêm não</li>
+                <li>Bệnh lý dây thần kinh ngoại biên</li>
+                <li>Bệnh cơ và rối loạn nối thần kinh cơ</li>
+              </ul>
+
+              <h4>Thiết bị và công nghệ hiện đại:</h4>
+              <ul>
+                <li>Máy chụp cộng hưởng từ (MRI) 3.0 Tesla</li>
+                <li>Máy CT Scanner 128 lát cắt</li>
+                <li>Máy điện não đồ (EEG) và điện cơ đồ (EMG)</li>
+                <li>Hệ thống theo dõi bệnh nhân ICU thần kinh</li>
+                <li>Thiết bị siêu âm Doppler mạch máu não</li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        {/* Tab Content */}
-        <div className="department-content">
-          <div className="content-container">
-            {/* Overview Tab */}
-            {activeTab === "overview" && (
-              <div className="overview-content">
-                <div className="overview-grid">
-                  <div className="main-content">
-                    <h3>Về khoa {departmentData.name}</h3>
-                    <p>{departmentData.overview.mission}</p>
-
-                    <h4>Các chuyên khoa điều trị:</h4>
-                    <div className="specialties-grid">
-                      {departmentData.overview.specialties.map(
-                        (specialty, index) => (
-                          <div key={index} className="specialty-card">
-                            <i className="fas fa-check-circle"></i>
-                            <span>{specialty}</span>
-                          </div>
-                        )
-                      )}
+          {/* Doctors Team */}
+          <div className="doctors-team">
+            <h2>Đội ngũ bác sĩ</h2>
+            <div className="doctors-grid">
+              {listDoctors &&
+                listDoctors.length > 0 &&
+                listDoctors.map((doctor, index) => (
+                  <div key={index} className="doctor-card">
+                    <div className="doctor-image">
+                      <img
+                        src={doctor.image}
+                        alt={`${doctor.firstName} ${doctor.lastName}`}
+                      />
                     </div>
+                    <div className="doctor-info">
+                      <h3>
+                        {doctor.lastName} {doctor.firstName}
+                      </h3>
+                      <p className="position">{doctor.position}</p>
+                      <p className="experience">{doctor.experience}</p>
+                      <p className="specialty">
+                        <strong>Chuyên môn:</strong> {doctor.specialty}
+                      </p>
+                      <p className="education">
+                        <strong>Đào tạo:</strong> {doctor.education}
+                      </p>
 
-                    <h4>Dịch vụ y tế:</h4>
-                    {departmentData.services.map((service, index) => (
-                      <div key={index} className="service-section">
-                        <h5>{service.category}</h5>
-                        <ul>
-                          {service.items.map((item, itemIndex) => (
-                            <li key={itemIndex}>{item}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="sidebar-content">
-                    <div className="achievements-card">
-                      <h4>Thành tựu nổi bật</h4>
-                      <ul>
-                        {departmentData.overview.achievements.map(
-                          (achievement, index) => (
-                            <li key={index}>{achievement}</li>
-                          )
-                        )}
-                      </ul>
-                    </div>
-
-                    <div className="facilities-card">
-                      <h4>Trang thiết bị</h4>
-                      <ul>
-                        {departmentData.facilities.map((facility, index) => (
-                          <li key={index}>{facility}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Doctors Tab */}
-            {activeTab === "doctors" && (
-              <div className="doctors-content">
-                <h3>Đội ngũ bác sĩ khoa {departmentData.name}</h3>
-                <div className="doctors-grid">
-                  {doctors.map((doctor, index) => (
-                    <div key={index} className="doctor-card">
-                      <div className="doctor-header">
-                        <div className="doctor-image">
-                          <img src={doctor.image} alt={doctor.name} />
-                        </div>
-                        <div className="doctor-basic-info">
-                          <h4>{doctor.name}</h4>
-                          <p className="position">{doctor.position}</p>
-                          <p className="specialization">
-                            {doctor.specialization}
-                          </p>
-                          <p className="experience">
-                            <i className="fas fa-clock"></i>
-                            Kinh nghiệm: {doctor.experience}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="doctor-details">
-                        <div className="achievements-section">
-                          <h5>Thành tựu nổi bật:</h5>
-                          <ul className="achievements">
-                            {doctor.achievements.map(
-                              (achievement, achIndex) => (
-                                <li key={achIndex}>{achievement}</li>
-                              )
-                            )}
-                          </ul>
-                        </div>
-
-                        <div className="doctor-schedule-section">
-                          <div className="schedule-info">
-                            <h5>📅 Lịch khám trong tuần:</h5>
-                            <div className="schedule-grid">
-                              <div className="schedule-day">
-                                <span className="day">Thứ 2</span>
-                                <span className="time">8:00 - 11:30</span>
-                              </div>
-                              <div className="schedule-day">
-                                <span className="day">Thứ 4</span>
-                                <span className="time">14:00 - 17:00</span>
-                              </div>
-                              <div className="schedule-day">
-                                <span className="day">Thứ 6</span>
-                                <span className="time">8:00 - 11:30</span>
-                              </div>
-                              <div className="schedule-day available">
-                                <span className="day">Thứ 7</span>
-                                <span className="time">8:00 - 11:00</span>
-                                <span className="status">Còn chỗ</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <div className="booking-section">
-                            <div className="price-info">
-                              <h5>💰 Thông tin khám:</h5>
-                              <div className="price-details">
-                                <span className="price">500.000đ</span>
-                                <span className="price-label">/ lần khám</span>
-                              </div>
-                              <p className="booking-note">
-                                <i className="fas fa-check-circle"></i>
-                                Miễn phí đặt lịch
-                              </p>
-                            </div>
-
-                            <div className="booking-actions">
-                              <button
-                                className="btn-book-appointment"
-                                onClick={() =>
-                                  this.handleBookDoctorAppointment(doctor)
-                                }
-                              >
-                                <i className="fas fa-calendar-plus"></i>
-                                Đặt lịch khám
-                              </button>
-                              <button
-                                className="btn-doctor-info"
-                                onClick={() =>
-                                  this.handleViewDoctorDetail(doctor)
-                                }
-                              >
-                                <i className="fas fa-info-circle"></i>
-                                Xem chi tiết
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="doctor-workplace">
-                        <i className="fas fa-map-marker-alt"></i>
-                        <span>
-                          Khoa {departmentData.name} - {departmentData.facility}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Procedures Tab */}
-            {activeTab === "procedures" && (
-              <div className="procedures-content">
-                <h3>Quy trình khám bệnh tại khoa {departmentData.name}</h3>
-                {departmentData.procedures.map((procedure, index) => (
-                  <div key={index} className="procedure-section">
-                    <h4>{procedure.title}</h4>
-                    <div className="procedure-steps">
-                      {procedure.steps.map((step, stepIndex) => (
-                        <div key={stepIndex} className="procedure-step">
-                          <div className="step-number">{step.step}</div>
-                          <div className="step-content">
-                            <h5>{step.title}</h5>
-                            <p>{step.description}</p>
-                          </div>
-                        </div>
-                      ))}
+                      <button
+                        className="btn-book-appointment"
+                        onClick={() => this.handleBookingClick(doctor)}
+                      >
+                        <i className="fas fa-calendar-plus"></i>
+                        Đặt lịch khám
+                      </button>
                     </div>
                   </div>
                 ))}
+            </div>
+          </div>
+
+          {/* Booking Modal */}
+          <Modal
+            isOpen={isOpenBookingModal}
+            className={"booking-modal-container"}
+            size="xl"
+            centered
+            backdrop={true}
+          >
+            <div className="booking-modal-content">
+              <div className="booking-modal-header">
+                <span className="left">
+                  <i className="fas fa-calendar-check"></i>
+                  &nbsp; Thông tin đặt lịch khám bệnh
+                </span>
+                <span className="right" onClick={this.closeBookingModal}>
+                  <i className="fas fa-times"></i>
+                </span>
               </div>
-            )}
 
-            {/* Contact Tab */}
-            {activeTab === "contact" && (
-              <div className="contact-content">
-                <h3>Thông tin liên hệ</h3>
-                <div className="contact-grid">
-                  <div className="contact-info">
-                    <div className="contact-item">
-                      <i className="fas fa-map-marker-alt"></i>
-                      <div>
-                        <h4>Địa chỉ</h4>
-                        <p>{departmentData.contact.address}</p>
-                      </div>
+              <div className="booking-modal-body">
+                {/* Doctor Info */}
+                {selectedDoctor && (
+                  <div className="doctor-booking-info">
+                    <div className="doctor-details">
+                      <h5>
+                        <i className="fas fa-user-md"></i>
+                        &nbsp; Thông tin bác sĩ
+                      </h5>
+                      <p>
+                        <strong>Bác sĩ:</strong> {selectedDoctor.lastName}{" "}
+                        {selectedDoctor.firstName}
+                      </p>
+                      <p>
+                        <strong>Chuyên khoa:</strong> Thần kinh
+                      </p>
+                      <p>
+                        <strong>Chuyên môn:</strong> {selectedDoctor.specialty}
+                      </p>
+                    </div>
+                    <div className="clinic-info">
+                      <h5>
+                        <i className="fas fa-hospital"></i>
+                        &nbsp; Thông tin phòng khám
+                      </h5>
+                      <p>
+                        <strong>Giá khám:</strong> 500.000 VND
+                      </p>
+                      <p>
+                        <strong>Địa chỉ:</strong> Bệnh viện Đa khoa Quốc tế
+                      </p>
+                      <p>
+                        <strong>Số điện thoại:</strong> 024.3123.4567
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Booking Form */}
+                <div className="booking-form">
+                  <h5>
+                    <i className="fas fa-edit"></i>
+                    &nbsp; Thông tin đặt lịch
+                  </h5>
+
+                  <div className="row">
+                    <div className="col-6 form-group">
+                      <label>
+                        <i className="fas fa-user"></i>
+                        &nbsp; Họ và tên *
+                      </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        value={this.state.fullName}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "fullName")
+                        }
+                        placeholder="Nhập họ và tên"
+                      />
                     </div>
 
-                    <div className="contact-item">
-                      <i className="fas fa-phone"></i>
-                      <div>
-                        <h4>Điện thoại</h4>
-                        <p>Khám bệnh: {departmentData.contact.phone}</p>
-                        <p>Cấp cứu: {departmentData.contact.emergency}</p>
-                      </div>
-                    </div>
-
-                    <div className="contact-item">
-                      <i className="fas fa-envelope"></i>
-                      <div>
-                        <h4>Email</h4>
-                        <p>{departmentData.contact.email}</p>
-                      </div>
-                    </div>
-
-                    <div className="contact-item">
-                      <i className="fas fa-clock"></i>
-                      <div>
-                        <h4>Giờ làm việc</h4>
-                        <p>{departmentData.contact.workingHours.weekday}</p>
-                        <p>{departmentData.contact.workingHours.saturday}</p>
-                        <p>
-                          <strong>
-                            {departmentData.contact.workingHours.emergency}
-                          </strong>
-                        </p>
-                      </div>
+                    <div className="col-6 form-group">
+                      <label>
+                        <i className="fas fa-phone"></i>
+                        &nbsp; Số điện thoại *
+                      </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        value={this.state.phoneNumber}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "phoneNumber")
+                        }
+                        placeholder="Nhập số điện thoại"
+                      />
                     </div>
                   </div>
 
-                  <div className="contact-map">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.0963715413173!2d105.84949831533467!3d21.028775393080275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135abea4d87b213%3A0x6f27334f833e0c6d!2zQsOqbmggdmnhu4duIEjhu691IG5naOG7i1R2aeG7h3QgxJDhu6tc!5e0!3m2!1svi!2s!4v1635750000000!5m2!1svi!2s"
-                      width="100%"
-                      height="300"
-                      style={{ border: 0 }}
-                      allowFullScreen=""
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Bản đồ Bệnh viện Việt Đức"
-                    ></iframe>
+                  <div className="row">
+                    <div className="col-6 form-group">
+                      <label>
+                        <i className="fas fa-envelope"></i>
+                        &nbsp; Email *
+                      </label>
+                      <input
+                        className="form-control"
+                        type="email"
+                        value={this.state.email}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "email")
+                        }
+                        placeholder="Nhập địa chỉ email"
+                      />
+                    </div>
+
+                    <div className="col-6 form-group">
+                      <label>
+                        <i className="fas fa-map-marker-alt"></i>
+                        &nbsp; Địa chỉ *
+                      </label>
+                      <input
+                        className="form-control"
+                        type="text"
+                        value={this.state.address}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "address")
+                        }
+                        placeholder="Nhập địa chỉ"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-4 form-group">
+                      <label>
+                        <i className="fas fa-birthday-cake"></i>
+                        &nbsp; Ngày sinh
+                      </label>
+                      <input
+                        className="form-control"
+                        type="date"
+                        value={this.state.birthday}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "birthday")
+                        }
+                      />
+                    </div>
+
+                    <div className="col-4 form-group">
+                      <label>
+                        <i className="fas fa-venus-mars"></i>
+                        &nbsp; Giới tính *
+                      </label>
+                      <Select
+                        value={this.state.selectedGender}
+                        onChange={this.handleChangeSelect}
+                        options={this.state.genders}
+                        placeholder="Chọn giới tính"
+                        name="selectedGender"
+                        classNamePrefix="react-select"
+                      />
+                    </div>
+
+                    <div className="col-4 form-group">
+                      <label>
+                        <i className="fas fa-calendar-alt"></i>
+                        &nbsp; Ngày khám *
+                      </label>
+                      <DatePicker
+                        onChange={this.handleOnChangeDatePicker}
+                        className="form-control"
+                        value={this.state.selectedDate}
+                        minDate={new Date()}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-6 form-group">
+                      <label>
+                        <i className="fas fa-clock"></i>
+                        &nbsp; Thời gian khám *
+                      </label>
+                      <Select
+                        value={this.state.selectedTimeSlot}
+                        onChange={this.handleChangeSelect}
+                        options={this.state.timeSlots}
+                        placeholder="Chọn thời gian"
+                        name="selectedTimeSlot"
+                        classNamePrefix="react-select"
+                      />
+                    </div>
+
+                    <div className="col-6 form-group">
+                      <label>
+                        <i className="fas fa-notes-medical"></i>
+                        &nbsp; Lý do khám
+                      </label>
+                      <textarea
+                        className="form-control"
+                        rows="3"
+                        value={this.state.reason}
+                        onChange={(event) =>
+                          this.handleOnChangeInput(event, "reason")
+                        }
+                        placeholder="Mô tả triệu chứng, lý do khám..."
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            )}
-          </div>
-        </div>
 
-        <HomeFooter />
-      </div>
+              <div className="booking-modal-footer">
+                <button
+                  className="btn-booking-cancel"
+                  onClick={this.closeBookingModal}
+                >
+                  <i className="fas fa-times"></i>
+                  &nbsp; Hủy bỏ
+                </button>
+                <button
+                  className="btn-booking-confirm"
+                  onClick={this.handleConfirmBooking}
+                >
+                  <i className="fas fa-check"></i>
+                  &nbsp; Xác nhận đặt lịch
+                </button>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      </Fragment>
     );
   }
 }
@@ -569,13 +615,17 @@ class DetailSpecialtyDepartment extends Component {
 const mapStateToProps = (state) => {
   return {
     language: state.app.language,
+    genders: state.admin.genders,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    getGenders: () => dispatch(actions.fetchGenderStart()),
+  };
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(DetailSpecialtyDepartment)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DetailSpecialtyDepartment);
