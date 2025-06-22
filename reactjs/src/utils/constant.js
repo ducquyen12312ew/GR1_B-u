@@ -5,7 +5,11 @@ export const path = {
   LOG_OUT: "/logout",
   SYSTEM: "/system",
   DETAIL_DOCTOR: "/detail-doctor/:id",
-  DETAIL_SPECIALTY: "/detail-specialty/:id", // Thêm dòng này
+
+  // 🔧 FIX: Thêm missing paths
+  DETAIL_SPECIALTY: "/detail-specialty/:id",
+  DETAIL_CLINIC: "/detail-clinic/:id",
+  DETAIL_MEDICAL_FACILITY: "/detail-medical-facility/:id",
 };
 
 export const LANGUAGES = {
@@ -28,6 +32,7 @@ export const YesNoObj = {
   YES: "Y",
   NO: "N",
 };
+
 export const USER_ROLE = {
   ADMIN: "R1",
   DOCTOR: "R2",

@@ -2,11 +2,25 @@ import express from "express";
 import bodyParser from "body-parser";
 import viewEngine from "./config/viewEngine";
 import initWebRoutes from "./route/web";
-import connetDB from "./config/connectDB";
+import connectDB from "./config/connectDB";
 import cors from "cors";
+// 🆕 THÊM MỚI: Import cho Socket.IO
+import { Server } from "socket.io";
+import http from "http";
+
 require("dotenv").config();
 
 let app = express();
+
+// 🆕 THÊM MỚI: Tạo HTTP server và Socket.IO
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000", // URL của React app
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
 
 //config app
 //app.use(cors({ origin: true }));
@@ -34,6 +48,7 @@ app.use(function (req, res, next) {
   // Pass to next layer of middleware
   next();
 });
+
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: "50mb" }));
@@ -42,10 +57,53 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 viewEngine(app);
 initWebRoutes(app);
 
+// 🆕 THÊM MỚI: Socket.IO connection handling
+io.on("connection", (socket) => {
+  console.log("🔗 User connected to chatbot:", socket.id);
+
+  // Gửi tin nhắn chào mừng
+  socket.emit("welcome", {
+    message: "Chào mừng bạn đến với trợ lý AI của BookingCare!",
+    timestamp: new Date(),
+  });
+
+  // Xử lý tin nhắn từ client
+  socket.on("chat_message", (data) => {
+    console.log("💬 Received message from:", socket.id, data);
+    // Có thể xử lý real-time chat ở đây nếu cần
+  });
+
+  // Xử lý khi user disconnect
+  socket.on("disconnect", () => {
+    console.log("❌ User disconnected from chatbot:", socket.id);
+  });
+
+  // Xử lý lỗi
+  socket.on("error", (error) => {
+    console.error("🚨 Socket error:", error);
+  });
+});
+
+// 🆕 THÊM MỚI: Expose io instance để các controller khác có thể sử dụng
+app.set("io", io);
+
 let port = process.env.PORT || 6969;
 //Port === undefined => port = 6969
 
-app.listen(port, () => {
+// 🔄 THAY ĐỔI: Sử dụng server.listen thay vì app.listen
+server.listen(port, () => {
   //callback
-  console.log("Backend Nodejs is runing on the port : " + port);
+  console.log("🚀 Backend Nodejs is running on the port: " + port);
+  console.log("🤖 Chatbot Socket.IO is ready!");
+  console.log(
+    "🌐 Frontend URL:",
+    process.env.URL_REACT || "http://localhost:3000"
+  );
+  console.log(
+    "🔑 OpenAI API Key:",
+    process.env.OPENAI_API_KEY ? "✅ Loaded" : "❌ Missing"
+  );
+
+  // Kết nối database
+  connectDB();
 });

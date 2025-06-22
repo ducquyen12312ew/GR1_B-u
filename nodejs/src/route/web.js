@@ -2,7 +2,9 @@ import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
 import doctorController from "../controllers/doctorController";
-import patientController from "../controllers/patientController"; // THÊM DÒNG NÀY
+import patientController from "../controllers/patientController";
+// 🆕 THÊM MỚI: Import chatbot controller
+import chatbotController from "../controllers/chatbotController";
 
 let router = express.Router();
 
@@ -38,21 +40,18 @@ let initWebRoutes = (app) => {
     doctorController.getScheduleByDate
   );
 
-  // ✅ THÊM MỚI: API để đặt lịch khám
+  // Patient APIs
   router.post(
     "/api/patient-book-appointment",
     patientController.postBookAppointment
   );
-  router.post("/api/patient-book-appointment", (req, res) => {
-    console.log("🚀 TEST ROUTE CALLED - API Works!");
-    console.log("Request body:", req.body);
 
-    res.json({
-      errorCode: 0,
-      errorMessage: "Test route success!",
-      receivedData: req.body,
-    });
-  });
+  // 🆕 THÊM MỚI: Chatbot APIs
+  router.post("/api/chatbot/message", chatbotController.handleChatMessage);
+  router.get("/api/chatbot/stats", chatbotController.getChatbotStats);
+  router.get("/api/chatbot/health", chatbotController.healthCheck);
+  router.post("/api/chatbot/feedback", chatbotController.handleFeedback);
+
   return app.use("/", router);
 };
 

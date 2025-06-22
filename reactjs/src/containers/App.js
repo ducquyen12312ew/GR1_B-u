@@ -14,7 +14,6 @@ import { path } from "../utils";
 
 import Home from "../routes/Home";
 import Login from "./Auth/Login";
-
 import System from "../routes/System";
 
 import { CustomToastCloseButton } from "../components/CustomToast";
@@ -22,9 +21,13 @@ import HomePage from "./HomePage/HomePage.js";
 import CustomScrollbars from "../components/CustomScrollbars.js";
 import DetailDoctor from "./Patient/Doctor/DetailDoctor.js";
 import Doctor from "../routes/Doctor.js";
+
+// 🆕 THÊM MỚI: Import ChatbotWidget
+import ChatbotWidget from "../components/Chatbot/ChatbotWidget.js";
+
+// 🔧 FIX: Import missing components
 import DetailMedicalFacility from "./Patient/MedicalFacility/DetailMedicalFacility.js";
 import DetailSpecialty from "./Patient/Specialty/DetailSpecialty.js";
-import DetailSpecialtyDepartment from "./HomePage/DetailSpecialtyDepartment.js";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -68,17 +71,15 @@ class App extends Component {
                   />
                   <Route path={path.HOMEPAGE} component={HomePage} />
                   <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+
+                  {/* 🔧 FIX: Thêm missing routes */}
                   <Route
-                    path="/detail-medical-facility/:id"
-                    component={DetailMedicalFacility}
-                  />
-                  <Route
-                    path="/detail-specialty/:id"
+                    path={path.DETAIL_SPECIALTY}
                     component={DetailSpecialty}
                   />
                   <Route
-                    path="/detail-specialty-department/:slug"
-                    component={DetailSpecialtyDepartment}
+                    path={path.DETAIL_CLINIC}
+                    component={DetailMedicalFacility}
                   />
                 </Switch>
               </CustomScrollbars>
@@ -94,8 +95,10 @@ class App extends Component {
               pauseOnFocusLoss
               draggable
               pauseOnHover
-              closeButton={<CustomToastCloseButton />}
             />
+
+            {/* 🆕 THÊM MỚI: ChatbotWidget - Hiển thị trên tất cả các trang */}
+            <ChatbotWidget />
           </div>
         </Router>
       </Fragment>
