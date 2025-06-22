@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "lodash": "^4.17.21",
     "mysql2": "^2.2.5",
+    "nodemailer": "^7.0.3",
     "sequelize": "^6.37.6"
   },
   "devDependencies": {

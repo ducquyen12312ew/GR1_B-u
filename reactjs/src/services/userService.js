@@ -54,8 +54,8 @@ const getScheduleDoctorByDate = (doctorId, date) => {
   );
 };
 
-// ✅ THÊM MỚI: Function để lưu thông tin đặt lịch
-const saveBookingService = (data) => {
+// Thêm function để đặt lịch khám
+const postPatientBookAppointment = (data) => {
   return axios.post("/api/patient-book-appointment", data);
 };
 
@@ -72,5 +72,5 @@ export {
   getDetailInforDoctor,
   saveBulkScheduleDoctor,
   getScheduleDoctorByDate,
-  saveBookingService, // ✅ THÊM VÀO EXPORT
+  postPatientBookAppointment, // Export function mới
 };

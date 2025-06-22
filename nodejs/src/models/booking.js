@@ -9,6 +9,33 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Booking belongs to User (Doctor)
+      Booking.belongsTo(models.User, {
+        foreignKey: "doctorId",
+        targetKey: "id",
+        as: "doctorData",
+      });
+
+      // Booking belongs to User (Patient)
+      Booking.belongsTo(models.User, {
+        foreignKey: "patientId",
+        targetKey: "id",
+        as: "patientData",
+      });
+
+      // Booking belongs to Allcode (Status)
+      Booking.belongsTo(models.Allcode, {
+        foreignKey: "statusId",
+        targetKey: "keyMap",
+        as: "statusDataBooking",
+      });
+
+      // Booking belongs to Allcode (TimeType)
+      Booking.belongsTo(models.Allcode, {
+        foreignKey: "timeType",
+        targetKey: "keyMap",
+        as: "timeTypeDataBooking",
+      });
     }
   }
   Booking.init(
@@ -16,8 +43,9 @@ module.exports = (sequelize, DataTypes) => {
       statusId: DataTypes.STRING,
       doctorId: DataTypes.INTEGER,
       patientId: DataTypes.INTEGER,
-      date: DataTypes.DATE,
+      date: DataTypes.STRING, // Đổi thành STRING để tương thích với Schedule
       timeType: DataTypes.STRING,
+      token: DataTypes.STRING,
     },
     {
       sequelize,

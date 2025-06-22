@@ -2,6 +2,7 @@ import express from "express";
 import homeController from "../controllers/homeController";
 import userController from "../controllers/userController";
 import doctorController from "../controllers/doctorController";
+import patientController from "../controllers/patientController"; // THÊM DÒNG NÀY
 
 let router = express.Router();
 
@@ -41,6 +42,10 @@ let initWebRoutes = (app) => {
   router.post(
     "/api/patient-book-appointment",
     doctorController.postBookAppointment
+  );
+  router.post(
+    "/api/patient-book-appointment",
+    patientController.postBookAppointment
   );
 
   return app.use("/", router);
