@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./MedicalFacility.scss"; // Assuming you have a MedicalFacility component
-import { FormattedMessage } from "react-intl"; // If you are using internationalization
-import Slider from "react-slick"; // If you are using a slider library
-// MedicalFacility.js
+import "./MedicalFacility.scss";
+import { FormattedMessage } from "react-intl";
+import Slider from "react-slick";
+
 class MedicalFacility extends Component {
   render() {
     return (
@@ -17,27 +17,27 @@ class MedicalFacility extends Component {
             <Slider {...this.props.settings}>
               <div className="section-customize">
                 <div className="bg-image section-medical-facility" />
-                <div>Hệ thống Y tế Thu Cúc 1</div>
+                <div>Bệnh viện Bạch Mai</div>
               </div>
               <div className="section-customize">
                 <div className="bg-image section-medical-facility" />
-                <div>Hệ thống Y tế Thu Cúc 2</div>
+                <div>Bệnh viện Thu Cúc</div>
               </div>
               <div className="section-customize">
                 <div className="bg-image section-medical-facility" />
-                <div>Hệ thống Y tế Thu Cúc 3</div>
+                <div>Bệnh viện Việt Đức</div>
               </div>
               <div className="section-customize">
                 <div className="bg-image section-medical-facility" />
-                <div>Hệ thống Y tế Thu Cúc 4</div>
+                <div>Bệnh viện K</div>
               </div>
               <div className="section-customize">
                 <div className="bg-image section-medical-facility" />
-                <div>Hệ thống Y tế Thu Cúc 5</div>
+                <div>Bệnh viện Đại học Y Hà Nội</div>
               </div>
               <div className="section-customize">
                 <div className="bg-image section-medical-facility" />
-                <div>Hệ thống Y tế Thu Cúc 6</div>
+                <div>Phòng khám Medlatec</div>
               </div>
             </Slider>
           </div>
@@ -50,6 +50,7 @@ class MedicalFacility extends Component {
 const mapStateToProps = (state) => {
   return {
     isLoggedIn: state.user.isLoggedIn,
+    language: state.app.language,
   };
 };
 
