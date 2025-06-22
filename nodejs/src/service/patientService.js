@@ -1,18 +1,10 @@
 import db from "../models/index";
-import emailService from "./emailService";
+import { sendAppointmentConfirmation } from "./emailService";
 require("dotenv").config();
 
 let postBookAppointment = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
-      console.log("=== PATIENT BOOKING SERVICE ===");
-      console.log("📧 Email config check:");
-      console.log("- EMAIL_APP:", process.env.EMAIL_APP);
-      console.log(
-        "- EMAIL_APP_PASSWORD:",
-        process.env.EMAIL_APP_PASSWORD ? "✅ Set" : "❌ Not set"
-      );
-
       if (
         !data.email ||
         !data.doctorId ||
@@ -22,75 +14,97 @@ let postBookAppointment = (data) => {
         !data.selectedGender ||
         !data.address
       ) {
-        console.log("❌ Missing required parameters");
         resolve({
           errorCode: 1,
-          errorMessage: "Missing required parameters",
+          errorMessage: "Missing required parameter!",
         });
-        return;
-      }
+      } else {
+        // Tạo bệnh nhân mới hoặc tìm bệnh nhân đã có
+        let user = await db.User.findOrCreate({
+          where: { email: data.email },
+          defaults: {
+            email: data.email,
+            roleId: "R3", // Role bệnh nhân
+            gender: data.selectedGender,
+            address: data.address,
+            firstName: data.fullName,
+          },
+        });
 
-      // Xử lý date
-      let bookingDate = data.date;
-      if (typeof bookingDate === "number") {
-        bookingDate = bookingDate.toString();
-      }
+        // Tạo booking mới
+        if (user && user[0]) {
+          await db.Booking.findOrCreate({
+            where: {
+              patientId: user[0].id,
+              doctorId: data.doctorId,
+              date: data.date,
+              timeType: data.timeType,
+            },
+            defaults: {
+              statusId: "S1", // Status: New
+              doctorId: data.doctorId,
+              patientId: user[0].id,
+              date: data.date,
+              timeType: data.timeType,
+            },
+          });
 
-      // Prepare booking data
-      let bookingData = {
-        statusId: "S1",
-        doctorId: parseInt(data.doctorId),
-        patientId: data.patientId || null,
-        date: bookingDate,
-        timeType: data.timeType,
-        token: data.token || null,
-      };
+          // Lấy thông tin bác sĩ để gửi email
+          let doctorInfo = await db.User.findOne({
+            where: { id: data.doctorId },
+            attributes: ["firstName", "lastName"],
+            raw: true,
+          });
 
-      console.log("💾 Creating booking in database...");
+          // Lấy thông tin time type
+          let timeTypeData = await db.Allcode.findOne({
+            where: { keyMap: data.timeType, type: "TIME" },
+            attributes: ["valueEn", "valueVi"],
+            raw: true,
+          });
 
-      // Tạo booking trong database
-      let result = await db.Booking.create(bookingData);
+          // Chuẩn bị dữ liệu email
+          const emailData = {
+            patientName: data.fullName,
+            patientEmail: data.email,
+            appointmentDate: data.date,
+            appointmentTime: timeTypeData
+              ? timeTypeData.valueVi
+              : data.timeType,
+            doctorName: doctorInfo
+              ? `${doctorInfo.firstName} ${doctorInfo.lastName}`
+              : "Bác sĩ",
+            department: "Khoa Khám Bệnh",
+            clinicName: "Phòng Khám Đa Khoa",
+            clinicAddress: "123 Đường ABC, Quận 1, TP.HCM",
+            clinicPhone: "028-1234-5678",
+            appointmentId: `APT${Date.now()}`,
+          };
 
-      console.log("✅ Booking created successfully!");
-      console.log("📄 Booking ID:", result.id);
+          // Gửi email xác nhận
+          try {
+            const emailResult = await sendAppointmentConfirmation(emailData);
 
-      // Chuẩn bị dữ liệu email
-      let emailData = {
-        receiverEmail: data.email,
-        patientName: data.fullName,
-        phoneNumber: data.phoneNumber,
-        address: data.address,
-        doctorName: data.doctorName || "Bác sĩ",
-        timeString: data.timeString || "Thời gian đã đặt",
-        reason: data.reason || "",
-        language: data.language || "vi",
-      };
-
-      console.log("📧 Sending confirmation email to:", data.email);
-
-      // Gửi email
-      try {
-        let emailResult = await emailService.sendBookingConfirmation(emailData);
-        if (emailResult.errorCode === 0) {
-          console.log("✅ Email sent successfully!");
-        } else {
-          console.log("⚠️ Email failed:", emailResult.message);
+            resolve({
+              errorCode: 0,
+              errorMessage: "Save booking succeed!",
+              emailSent: emailResult.success,
+              emailMessage:
+                emailResult.message || "Email confirmation processed",
+            });
+          } catch (emailError) {
+            console.error("Email error:", emailError);
+            resolve({
+              errorCode: 0,
+              errorMessage: "Save booking succeed! But email sending failed.",
+              emailSent: false,
+              emailMessage: "Could not send email confirmation",
+            });
+          }
         }
-      } catch (emailError) {
-        console.log("❌ Email error:", emailError.message);
       }
-
-      // Trả về thành công
-      resolve({
-        errorCode: 0,
-        errorMessage: "Đặt lịch thành công! Email xác nhận đã được gửi.",
-      });
     } catch (e) {
-      console.log("❌ ERROR in postBookAppointment:", e.message);
-      resolve({
-        errorCode: -1,
-        errorMessage: "Error from server: " + e.message,
-      });
+      reject(e);
     }
   });
 };
