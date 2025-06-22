@@ -41,9 +41,18 @@ let initWebRoutes = (app) => {
   // ✅ THÊM MỚI: API để đặt lịch khám
   router.post(
     "/api/patient-book-appointment",
-    doctorController.postBookAppointment
+    patientController.postBookAppointment
   );
+  router.post("/api/patient-book-appointment", (req, res) => {
+    console.log("🚀 TEST ROUTE CALLED - API Works!");
+    console.log("Request body:", req.body);
 
+    res.json({
+      errorCode: 0,
+      errorMessage: "Test route success!",
+      receivedData: req.body,
+    });
+  });
   return app.use("/", router);
 };
 
