@@ -423,7 +423,7 @@
             "Type": "ScalableImage",
             "Name": "btn_spe",
             "X": 184,
-            "Y": 242,
+            "Y": 244,
             "Width": 46,
             "Height": 46,
             "Visible": false,

@@ -1,4 +1,5 @@
 import doctorService from "../service/doctorService";
+
 let getTopDoctorHome = async (req, res) => {
   let limit = req.query.limit;
 
@@ -13,6 +14,7 @@ let getTopDoctorHome = async (req, res) => {
     });
   }
 };
+
 let getAllDoctors = async (req, res) => {
   try {
     let doctors = await doctorService.getAllDoctors();
@@ -24,6 +26,7 @@ let getAllDoctors = async (req, res) => {
     });
   }
 };
+
 let postInforDoctor = async (req, res) => {
   try {
     let response = await doctorService.saveDetailInforDoctor(req.body);
@@ -35,6 +38,7 @@ let postInforDoctor = async (req, res) => {
     });
   }
 };
+
 let getDetailDoctorById = async (req, res) => {
   try {
     let infor = await doctorService.getDetailDoctorById(req.query.id);
@@ -46,6 +50,7 @@ let getDetailDoctorById = async (req, res) => {
     });
   }
 };
+
 let bulkCreateSchedule = async (req, res) => {
   try {
     let infor = await doctorService.bulkCreateSchedule(req.body);
@@ -57,6 +62,7 @@ let bulkCreateSchedule = async (req, res) => {
     });
   }
 };
+
 let getScheduleByDate = async (req, res) => {
   try {
     let infor = await doctorService.getScheduleByDate(
@@ -71,6 +77,21 @@ let getScheduleByDate = async (req, res) => {
     });
   }
 };
+
+// ✅ THÊM MỚI: Controller để xử lý đặt lịch khám
+let postBookAppointment = async (req, res) => {
+  try {
+    let infor = await doctorService.postBookAppointment(req.body);
+    return res.status(200).json(infor);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errorCode: -1,
+      errorMessage: "Error from server",
+    });
+  }
+};
+
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
@@ -78,4 +99,5 @@ module.exports = {
   getDetailDoctorById: getDetailDoctorById,
   bulkCreateSchedule: bulkCreateSchedule,
   getScheduleByDate: getScheduleByDate,
+  postBookAppointment: postBookAppointment, // ✅ THÊM VÀO EXPORT
 };

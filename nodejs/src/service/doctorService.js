@@ -2,6 +2,7 @@ import db from "../models/index";
 import _ from "lodash";
 require("dotenv").config();
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
+
 let getTopDoctorHome = (limitInput) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -86,7 +87,6 @@ let saveDetailInforDoctor = (inputData) => {
   });
 };
 
-// ✅ Giữ nguyên logic nhưng bỏ console
 let getDetailDoctorById = (inputId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -140,6 +140,7 @@ let getDetailDoctorById = (inputId) => {
     }
   });
 };
+
 let bulkCreateSchedule = (data) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -178,6 +179,7 @@ let bulkCreateSchedule = (data) => {
     }
   });
 };
+
 let getScheduleByDate = (doctorId, date) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -213,6 +215,67 @@ let getScheduleByDate = (doctorId, date) => {
     }
   });
 };
+
+// ✅ THÊM MỚI: Service để xử lý đặt lịch khám
+let postBookAppointment = (data) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (
+        !data.email ||
+        !data.doctorId ||
+        !data.timeType ||
+        !data.date ||
+        !data.fullName ||
+        !data.selectedGender ||
+        !data.address
+      ) {
+        resolve({
+          errorCode: 1,
+          errorMessage: "Missing required parameter",
+        });
+      } else {
+        // Tạo hoặc tìm user patient
+        let user = await db.User.findOrCreate({
+          where: { email: data.email },
+          defaults: {
+            email: data.email,
+            firstName: data.fullName,
+            address: data.address,
+            phoneNumber: data.phoneNumber,
+            gender: data.selectedGender,
+            roleId: "R3", // R3 = Patient role
+            lastName: "Patient", // Giá trị mặc định cho lastName
+            password: "default123", // Password mặc định (nên hash trong thực tế)
+          },
+        });
+
+        // Tạo booking mới
+        if (user && user[0]) {
+          await db.Booking.create({
+            statusId: "S1", // S1 = New appointment
+            doctorId: data.doctorId,
+            patientId: user[0].id,
+            date: data.date,
+            timeType: data.timeType,
+          });
+
+          resolve({
+            errorCode: 0,
+            errorMessage: "Save booking succeed!",
+          });
+        } else {
+          resolve({
+            errorCode: 2,
+            errorMessage: "Failed to create or find user",
+          });
+        }
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
+
 module.exports = {
   getTopDoctorHome: getTopDoctorHome,
   getAllDoctors: getAllDoctors,
@@ -220,4 +283,5 @@ module.exports = {
   getDetailDoctorById: getDetailDoctorById,
   bulkCreateSchedule: bulkCreateSchedule,
   getScheduleByDate: getScheduleByDate,
+  postBookAppointment: postBookAppointment, // ✅ THÊM VÀO EXPORT
 };
