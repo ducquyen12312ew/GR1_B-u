@@ -16,26 +16,10 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    let { userInfo } = this.props;
-    let menu = [];
+    // 🔧 REMOVED: Bỏ check userInfo - Hiển thị menu admin mặc định
+    let menu = adminMenu; // Mặc định hiển thị admin menu cho tất cả user
 
-    console.log("userInfo:", userInfo); // Debug log
-
-    if (userInfo && !_.isEmpty(userInfo)) {
-      let role = userInfo.roleId;
-      console.log("roleId:", role); // Debug log
-
-      // So sánh với string thực tế thay vì constant
-      if (role === "Admin" || role === "Quản trị viên") {
-        menu = adminMenu;
-        console.log("Using adminMenu");
-      } else if (role === "Bác sĩ" || role === "Doctor") {
-        menu = doctorMenu;
-        console.log("Using doctorMenu");
-      }
-    }
-
-    console.log("Final menu:", menu); // Debug log
+    console.log("Using adminMenu for all users");
 
     this.setState({
       menuApp: menu,
@@ -43,25 +27,8 @@ class Header extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    // Cập nhật menu khi userInfo thay đổi
-    if (prevProps.userInfo !== this.props.userInfo) {
-      let { userInfo } = this.props;
-      let menu = [];
-
-      if (userInfo && !_.isEmpty(userInfo)) {
-        let role = userInfo.roleId;
-
-        if (role === "Admin" || role === "Quản trị viên") {
-          menu = adminMenu;
-        } else if (role === "Bác sĩ" || role === "Doctor") {
-          menu = doctorMenu;
-        }
-      }
-
-      this.setState({
-        menuApp: menu,
-      });
-    }
+    // 🔧 REMOVED: Bỏ logic phân quyền menu
+    // Giữ menu admin cho tất cả users
   }
 
   render() {
@@ -75,19 +42,19 @@ class Header extends Component {
         </div>
         <div className="languages">
           <span className="welcome">
-            Welcome,{" "}
-            {userInfo && userInfo.firstName ? userInfo.firstName : "Admin"}!
+            Welcome, Guest!{" "}
+            {/* 🔧 CHANGED: Hiển thị Guest thay vì check userInfo */}
           </span>
           <span className="language-vi">VN</span>
           <span className="language-en">EN</span>
-          {/* nút logout */}
-          <div
+          {/* 🔧 REMOVED: Bỏ nút logout vì không cần đăng nhập */}
+          {/* <div
             className="btn btn-logout"
             onClick={processLogout}
             title="Log out"
           >
             <i className="fas fa-sign-out-alt"></i>
-          </div>
+          </div> */}
         </div>
       </div>
     );
@@ -96,14 +63,14 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLoggedIn: state.user.isLoggedIn,
-    userInfo: state.user.userInfo,
+    isLoggedIn: state.user.isLoggedIn, // Giữ lại để tương thích
+    userInfo: state.user.userInfo, // Giữ lại để tương thích
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    processLogout: () => dispatch(actions.processLogout()),
+    processLogout: () => dispatch(actions.processLogout()), // Giữ lại để tương thích
   };
 };
 

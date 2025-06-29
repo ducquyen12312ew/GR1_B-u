@@ -5,6 +5,7 @@ import { ConnectedRouter as Router } from "connected-react-router";
 import { history } from "../redux";
 import { ToastContainer } from "react-toastify";
 
+// 🔧 FIX: Import authentication HOCs
 import {
   userIsAuthenticated,
   userIsNotAuthenticated,
@@ -58,6 +59,8 @@ class App extends Component {
               <CustomScrollbars style={{ height: "100vh", width: "100%" }}>
                 <Switch>
                   <Route path={path.HOME} exact component={Home} />
+
+                  {/* 🔧 FIX: Thêm các route quan trọng bị thiếu */}
                   <Route
                     path={path.LOGIN}
                     component={userIsNotAuthenticated(Login)}
@@ -70,6 +73,7 @@ class App extends Component {
                     path={"/doctor/"}
                     component={userIsAuthenticated(Doctor)}
                   />
+
                   <Route path={path.HOMEPAGE} component={HomePage} />
                   <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
 

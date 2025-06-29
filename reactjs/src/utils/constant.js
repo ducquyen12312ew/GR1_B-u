@@ -5,12 +5,10 @@ export const path = {
   LOG_OUT: "/logout",
   SYSTEM: "/system",
   DETAIL_DOCTOR: "/detail-doctor/:id",
-
-  // 🔧 FIX: Thêm missing paths
   DETAIL_SPECIALTY: "/detail-specialty/:id",
   DETAIL_CLINIC: "/detail-clinic/:id",
   DETAIL_MEDICAL_FACILITY: "/detail-medical-facility/:id",
-  DETAIL_SPECIALTY_DEPARTMENT: "/detail-specialty-department/:slug", // 🔧 THÊM MỚI
+  DETAIL_SPECIALTY_DEPARTMENT: "/detail-specialty-department/:slug",
 };
 
 export const LANGUAGES = {

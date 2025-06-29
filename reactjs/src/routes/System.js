@@ -8,20 +8,26 @@ import ManageDoctor from "../containers/System/Admin/ManageDoctor";
 
 class System extends Component {
   render() {
-    const { systemMenuPath, isLoggedIn } = this.props;
+    const { systemMenuPath } = this.props;
+
     return (
       <React.Fragment>
-        {isLoggedIn && <Header />}
+        {/* 🔧 REMOVED: Bỏ check isLoggedIn - Hiển thị header luôn */}
+        <Header />
+
         <div className="system-container">
           <div className="system-list">
             <Switch>
+              {/* 🔧 Tất cả routes đều public - không cần đăng nhập */}
               <Route path="/system/user-manage" component={UserManage} />
               <Route path="/system/user-redux" component={UserRedux} />
               <Route path="/system/manage-doctor" component={ManageDoctor} />
 
               <Route
                 component={() => {
-                  return <Redirect to={systemMenuPath} />;
+                  return (
+                    <Redirect to={systemMenuPath || "/system/user-manage"} />
+                  );
                 }}
               />
             </Switch>
@@ -35,7 +41,7 @@ class System extends Component {
 const mapStateToProps = (state) => {
   return {
     systemMenuPath: state.app.systemMenuPath,
-    isLoggedIn: state.user.isLoggedIn,
+    isLoggedIn: state.user.isLoggedIn, // Giữ lại để tương thích
   };
 };
 

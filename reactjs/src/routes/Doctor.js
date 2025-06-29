@@ -3,18 +3,28 @@ import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
 import ManageSchedule from "../containers/System/Doctor/ManageSchedule";
 import Header from "../containers/Header/Header";
+
 class Doctor extends Component {
   render() {
-    const { isLoggedIn } = this.props;
     return (
       <React.Fragment>
-        {isLoggedIn && <Header />}
+        {/* 🔧 REMOVED: Bỏ check isLoggedIn - Hiển thị header luôn */}
+        <Header />
+
         <div className="system-container">
           <div className="system-list">
             <Switch>
+              {/* 🔧 Routes public - không cần đăng nhập */}
               <Route
                 path="/doctor/manage-schedule"
                 component={ManageSchedule}
+              />
+
+              {/* 🔧 Default redirect */}
+              <Route
+                component={() => {
+                  return <Redirect to="/doctor/manage-schedule" />;
+                }}
               />
             </Switch>
           </div>
@@ -27,7 +37,7 @@ class Doctor extends Component {
 const mapStateToProps = (state) => {
   return {
     DoctorMenuPath: state.app.DoctorMenuPath,
-    isLoggedIn: state.user.isLoggedIn,
+    isLoggedIn: state.user.isLoggedIn, // Giữ lại để tương thích
   };
 };
 
