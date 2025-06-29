@@ -10,6 +10,7 @@ export const path = {
   DETAIL_SPECIALTY: "/detail-specialty/:id",
   DETAIL_CLINIC: "/detail-clinic/:id",
   DETAIL_MEDICAL_FACILITY: "/detail-medical-facility/:id",
+  DETAIL_SPECIALTY_DEPARTMENT: "/detail-specialty-department/:slug", // 🔧 THÊM MỚI
 };
 
 export const LANGUAGES = {

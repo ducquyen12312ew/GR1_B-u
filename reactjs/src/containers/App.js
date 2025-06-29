@@ -28,6 +28,7 @@ import ChatbotWidget from "../components/Chatbot/ChatbotWidget.js";
 // 🔧 FIX: Import missing components
 import DetailMedicalFacility from "./Patient/MedicalFacility/DetailMedicalFacility.js";
 import DetailSpecialty from "./Patient/Specialty/DetailSpecialty.js";
+import DetailSpecialtyDepartment from "./HomePage/DetailSpecialtyDepartment.js";
 
 class App extends Component {
   handlePersistorState = () => {
@@ -78,8 +79,12 @@ class App extends Component {
                     component={DetailSpecialty}
                   />
                   <Route
-                    path={path.DETAIL_CLINIC}
+                    path={path.DETAIL_MEDICAL_FACILITY}
                     component={DetailMedicalFacility}
+                  />
+                  <Route
+                    path="/detail-specialty-department/:slug"
+                    component={DetailSpecialtyDepartment}
                   />
                 </Switch>
               </CustomScrollbars>
