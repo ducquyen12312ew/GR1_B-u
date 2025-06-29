@@ -19,3 +19,6 @@ Bước 4: cả 2 window đều dùng lệnh npm install sau đấy dùng lệnh
 
  
  Sau khi chạy được project thì vào http://localhost:8080/crud để tạo tài khoản sau khi tạo xong sẽ qua trang http://localhost:3000/login sau khi đăng nhập xong sẽ vào trang quản lý của quản trị viên và trang chủ chính là ở http://localhost:3000/home
+
+ http://localhost:3000/system/user-redux đây là trang để tạo thông tin bác sỹ
+ http://localhost:3000/doctor/manage-schedule đây là trang để tạo giờ mà bác sỹ có thể nhận lịch và sẽ hiện ở phần bác sỹ nổi bật ở trang home
