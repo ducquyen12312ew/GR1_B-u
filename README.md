@@ -1,5 +1,7 @@
 project của em sẽ chia làm 2 phần là nodejs cho backend và reactjs cho frontend. Khi chạy project thì nên open folder ở 2 window vscode. Đầu tiên git clone https://github.com/ducquyen12312ew/GR1_B-u và làm theo các bước để chạy project
+
 Bước 1: cài đặt nodejs ở https://nodejs.org/en/download v14.21.3
+
 Bước 2: cài đặt xampp và làm theo các bước để import database
 - Click "New" bên trái
 - Tạo database mới với tên: thaiduong
