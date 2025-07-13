@@ -1,0 +1,103 @@
+import doctorService from "../service/doctorService";
+
+let getTopDoctorHome = async (req, res) => {
+  let limit = req.query.limit;
+
+  if (!limit) limit = 10;
+  try {
+    let response = await doctorService.getTopDoctorHome(+limit);
+    return res.status(200).json(response);
+  } catch (e) {
+    return res.status(200).json({
+      errorCode: -1,
+      message: "error from sever...",
+    });
+  }
+};
+
+let getAllDoctors = async (req, res) => {
+  try {
+    let doctors = await doctorService.getAllDoctors();
+    return res.status(200).json(doctors);
+  } catch (e) {
+    return res.status(200).json({
+      errorCode: -1,
+      errorMessage: "error from the sever",
+    });
+  }
+};
+
+let postInforDoctor = async (req, res) => {
+  try {
+    let response = await doctorService.saveDetailInforDoctor(req.body);
+    return res.status(200).json(response);
+  } catch (e) {
+    return res.status(200).json({
+      errorCode: -1,
+      errorMessage: "error from the sever",
+    });
+  }
+};
+
+let getDetailDoctorById = async (req, res) => {
+  try {
+    let infor = await doctorService.getDetailDoctorById(req.query.id);
+    return res.status(200).json(infor);
+  } catch (e) {
+    return res.status(200).json({
+      errorCode: -1,
+      errorMessage: "error from sever",
+    });
+  }
+};
+
+let bulkCreateSchedule = async (req, res) => {
+  try {
+    let infor = await doctorService.bulkCreateSchedule(req.body);
+    return res.status(200).json(infor);
+  } catch (e) {
+    return res.status(200).json({
+      errorCode: -1,
+      errorMessage: "error from sever",
+    });
+  }
+};
+
+let getScheduleByDate = async (req, res) => {
+  try {
+    let infor = await doctorService.getScheduleByDate(
+      req.query.doctorId,
+      req.query.date
+    );
+    return res.status(200).json(infor);
+  } catch (e) {
+    return res.status(200).json({
+      errorCode: -1,
+      errorMessage: "error from sever",
+    });
+  }
+};
+
+// ✅ THÊM MỚI: Controller để xử lý đặt lịch khám
+let postBookAppointment = async (req, res) => {
+  try {
+    let infor = await doctorService.postBookAppointment(req.body);
+    return res.status(200).json(infor);
+  } catch (e) {
+    console.log(e);
+    return res.status(200).json({
+      errorCode: -1,
+      errorMessage: "Error from server",
+    });
+  }
+};
+
+module.exports = {
+  getTopDoctorHome: getTopDoctorHome,
+  getAllDoctors: getAllDoctors,
+  postInforDoctor: postInforDoctor,
+  getDetailDoctorById: getDetailDoctorById,
+  bulkCreateSchedule: bulkCreateSchedule,
+  getScheduleByDate: getScheduleByDate,
+  postBookAppointment: postBookAppointment, // ✅ THÊM VÀO EXPORT
+};
